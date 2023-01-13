@@ -13,3 +13,7 @@ Run from inside csproj directory.
 ```
 dotnet run
 ```
+
+# Additional Notes
+`System.IdentityModel.Tokens.Jwt` will by default always add the `nbf` (NotBefore) field, which will be set to the
+current timestamp when token was generated.
