@@ -1,5 +1,5 @@
 # Requirements
-* nodejs > 12.x - https://nodejs.org/en/download/
+* nodejs >= 12.x - https://nodejs.org/en/download/
 
 # Setup & Build
 ```
