@@ -1,5 +1,12 @@
 {
   "tokenId": 1,
-  "tokenString": "abcdefghijklmnopqrstuvwxyz0123456789",
-  "streamName": "teststream"
+  "token": "abcdefghijklmnopqrstuvwxyz0123456789",
+  "streams": [
+    {
+        "streamName": "testStream"
+    }
+  ],
+  "tracking": {
+    "trackingId": "trackingIdFromParentToken"
+  }
 }
