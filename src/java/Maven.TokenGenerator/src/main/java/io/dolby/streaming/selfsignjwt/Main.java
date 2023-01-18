@@ -8,35 +8,35 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class Main {
+
+    private static Auth0TokenGenerator _tokenGenerator = new Auth0TokenGenerator();
+
     public static void main(String[] args) {
+
         // If there is no TrackingID on the Subscribe Token, we dont need to set one on the Self Signed Token
-        //CreateSSTWithNoTrackingID();
+        var sstNoTrackingId = CreateSSTWithNoTrackingID();
 
         // If there is no TrackingID in the Subscribe Token, we can set a Custom TrackingID for a specific Self Signed Token
-        //CreateSSTWithCustomTrackingID();
+        var sstCustomTrackingId = CreateSSTWithCustomTrackingID();
 
         // If there is a TrackingID in the Subscribe Token, we need to set the same TrackingID on the Self Signed Token
-        CreateSSTWithParentTrackingID();
+        var sstParentTrackingId = CreateSSTWithParentTrackingID();
 
-
+        System.out.println(
+                "SST with no TrackingID : "+ sstNoTrackingId
+                + "\nSST with custom TrackingID : "+ sstCustomTrackingId
+                + "\nSST with parent TrackingID : "+ sstParentTrackingId);
     }
 
 
-    private static void CreateSSTWithNoTrackingID(){
+    private static String CreateSSTWithNoTrackingID(){
         var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
-            return;
+            return null;
         }
 
-        var generator = new Auth0TokenGenerator();
-        // alternate library for JWT signing
-        //var generator = new JavaJwtTokenGenerator();
-
-        //
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, null);
-
-        System.out.println(selfSignToken);
+        return _tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, null);
         /*
         {
           "streaming": {
@@ -49,47 +49,46 @@ public class Main {
           },
           "exp": 1674016803
         }
-
-
          */
     }
 
-    private static void CreateSSTWithCustomTrackingID(){
+    private static String CreateSSTWithCustomTrackingID(){
         // If there is no TrackingID in the Subscribe Token, then the SST can have any TrackingID you want.
-        // This examples show this.
+
         var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
-            return;
+            return null;
         }
 
-        var generator = new Auth0TokenGenerator();
-        // alternate library for JWT signing
-        //var generator = new JavaJwtTokenGenerator();
-
-        //
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, new Tracking("SSTOnlyTrackingId"));
-
-        System.out.println(selfSignToken);
+        return _tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, new Tracking("SSTOnlyTrackingId"));
+        /*
+        {
+            "streaming": {
+            "tokenId": 1,
+            "tokenType": "Subscribe",
+            "streamName": "testStream",
+            "allowedOrigins": [],
+            "allowedIpAddresses": [],
+            "tracking": {
+              "trackingId": "SSTOnlyTrackingId"
+            }
+            },
+            "exp": 1674020363
+        }
+         */
     }
 
-    private static void CreateSSTWithParentTrackingID(){
+    private static String CreateSSTWithParentTrackingID(){
         // If there is a TrackingID in the Subscribe Token, then the SST will need to have the TrackingID to be validated correctly when streaming.
         // This examples show this.
         var sampleToken = ParseJson("sampleSSTWithParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
-            return;
+            return null;
         }
 
-        var generator = new Auth0TokenGenerator();
-        // alternate library for JWT signing
-        //var generator = new JavaJwtTokenGenerator();
-
-        //
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
-
-        System.out.println(selfSignToken);
+        return _tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
         /*
         {
           "streaming": {
@@ -103,7 +102,7 @@ public class Main {
             }
           },
           "exp": 1674018761
-        }   
+        }
          */
     }
 
