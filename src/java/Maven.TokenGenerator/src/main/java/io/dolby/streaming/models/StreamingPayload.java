@@ -14,14 +14,17 @@ public class StreamingPayload {
 
     public List<String> allowedIpAddresses;
 
+    public Tracking tracking;
+
     public StreamingPayload() {
         this.tokenType = "Subscribe";
     }
 
-    public StreamingPayload(long tokenId, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses) {
+    public StreamingPayload(long tokenId, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
         this();
         this.tokenId = tokenId;
         this.streamName = streamName;
+        this.tracking = tracking;
 
         if (allowedOrigins == null) {
             allowedOrigins = Collections.<String>emptyList();

@@ -5,5 +5,8 @@
     {
         "streamName": "testStream"
     }
-  ]
+  ],
+  "tracking": {
+    "trackingId": "trackingIdFromParent"
+  }
 }

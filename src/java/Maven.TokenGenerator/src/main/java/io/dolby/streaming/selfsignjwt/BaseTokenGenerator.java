@@ -3,6 +3,7 @@ package io.dolby.streaming.selfsignjwt;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.dolby.streaming.models.JwtPayload;
+import io.dolby.streaming.models.Tracking;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,24 +23,24 @@ public abstract class BaseTokenGenerator {
         _hmacAlg = hmacAlg;
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName) {
-        return CreateToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), DefaultExpiresIn);
+    public String CreateToken(long tokenId, String tokenString, String streamName, Tracking tracking) {
+        return CreateToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), DefaultExpiresIn, tracking);
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, int expiresIn) {
-        return CreateToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), expiresIn);
+    public String CreateToken(long tokenId, String tokenString, String streamName, int expiresIn, Tracking tracking) {
+        return CreateToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), expiresIn, tracking);
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses) {
-        return CreateToken(tokenId, tokenString, streamName, allowedOrigins, allowedIpAddresses, DefaultExpiresIn);
+    public String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
+        return CreateToken(tokenId, tokenString, streamName, allowedOrigins, allowedIpAddresses, DefaultExpiresIn, tracking);
     }
 
-    public abstract String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn);
+    public abstract String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking);
 
-    protected static Map<String, ?> CreatePayload(long tokenId, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses) {
+    protected static Map<String, ?> CreatePayload(long tokenId, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
         var mapper = new ObjectMapper();
 
-        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses);
+        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
 
         var typeRef = new TypeReference<Map<String, ?>>(){};
         return mapper.convertValue(payload, typeRef);

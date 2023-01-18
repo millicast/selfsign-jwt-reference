@@ -2,6 +2,7 @@ package io.dolby.streaming.selfsignjwt;
 
 import com.google.gson.Gson;
 import io.dolby.streaming.models.SampleSubscribeToken;
+import io.dolby.streaming.models.Tracking;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -9,16 +10,18 @@ import java.nio.charset.StandardCharsets;
 public class Main {
     public static void main(String[] args) {
         // If there is no TrackingID on the Subscribe Token, we dont need to set one on the Self Signed Token
-        CreateSSTWithNoTrackingID();
+        //CreateSSTWithNoTrackingID();
+
+        // If there is no TrackingID in the Subscribe Token, we can set a Custom TrackingID for a specific Self Signed Token
+        //CreateSSTWithCustomTrackingID();
 
         // If there is a TrackingID in the Subscribe Token, we need to set the same TrackingID on the Self Signed Token
         CreateSSTWithParentTrackingID();
 
-        // If there is no TrackingID in the Subscribe Token, we can set a Custom TrackingID for a specific Self Signed Token
-        CreateSSTWithCustomTrackingID();
+
     }
 
-    
+
     private static void CreateSSTWithNoTrackingID(){
         var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
         if (sampleToken == null) {
@@ -31,9 +34,24 @@ public class Main {
         //var generator = new JavaJwtTokenGenerator();
 
         //
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
+        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, null);
 
         System.out.println(selfSignToken);
+        /*
+        {
+          "streaming": {
+            "tokenId": 1,
+            "tokenType": "Subscribe",
+            "streamName": "testStream",
+            "allowedOrigins": [],
+            "allowedIpAddresses": [],
+            "tracking": null
+          },
+          "exp": 1674016803
+        }
+
+
+         */
     }
 
     private static void CreateSSTWithCustomTrackingID(){
@@ -50,7 +68,7 @@ public class Main {
         //var generator = new JavaJwtTokenGenerator();
 
         //
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
+        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, new Tracking("SSTOnlyTrackingId"));
 
         System.out.println(selfSignToken);
     }
@@ -69,9 +87,24 @@ public class Main {
         //var generator = new JavaJwtTokenGenerator();
 
         //
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
+        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
 
         System.out.println(selfSignToken);
+        /*
+        {
+          "streaming": {
+            "tokenId": 1,
+            "tokenType": "Subscribe",
+            "streamName": "testStream",
+            "allowedOrigins": [],
+            "allowedIpAddresses": [],
+            "tracking": {
+              "trackingId": "trackingIdFromParent"
+            }
+          },
+          "exp": 1674018761
+        }   
+         */
     }
 
     private static SampleSubscribeToken ParseJson(String sampleName) {

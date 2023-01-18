@@ -2,6 +2,7 @@ package io.dolby.streaming.selfsignjwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import io.dolby.streaming.models.Tracking;
 
 import java.time.Instant;
 import java.util.*;
@@ -15,8 +16,8 @@ public class Auth0TokenGenerator extends BaseTokenGenerator {
         super(hmacAlg);
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn) {
-        var payload = CreatePayload(tokenId, streamName, allowedOrigins, allowedIpAddresses);
+    public String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking) {
+        var payload = CreatePayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
         Algorithm algorithm = GetAlgorithm(tokenString);
         return JWT.create()
                 .withPayload(payload)
