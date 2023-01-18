@@ -1,10 +1,10 @@
-﻿var sampleToken = JsonSerializer.Deserialize<SampleToken>(File.OpenRead("sample.json"));
+﻿var sampleToken = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("sampleSelfSigned.json"));
 if (sampleToken is null)
 {
     throw new Exception("bad sample json");
 }
 
 var tokenGenerator = new TokenGenerator();
-var selfSignToken = tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.tokenString, sampleToken.streamName);
+var selfSignToken = tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.First().streamName);
 
 Console.WriteLine(selfSignToken);
