@@ -8,7 +8,19 @@ import java.nio.charset.StandardCharsets;
 
 public class Main {
     public static void main(String[] args) {
-        var sampleToken = ParseJson();
+        // If there is no TrackingID on the Subscribe Token, we dont need to set one on the Self Signed Token
+        CreateSSTWithNoTrackingID();
+
+        // If there is a TrackingID in the Subscribe Token, we need to set the same TrackingID on the Self Signed Token
+        CreateSSTWithParentTrackingID();
+
+        // If there is no TrackingID in the Subscribe Token, we can set a Custom TrackingID for a specific Self Signed Token
+        CreateSSTWithCustomTrackingID();
+    }
+
+    
+    private static void CreateSSTWithNoTrackingID(){
+        var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
             return;
@@ -18,15 +30,54 @@ public class Main {
         // alternate library for JWT signing
         //var generator = new JavaJwtTokenGenerator();
 
+        //
         var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
 
         System.out.println(selfSignToken);
     }
 
-    private static SampleSubscribeToken ParseJson() {
+    private static void CreateSSTWithCustomTrackingID(){
+        // If there is no TrackingID in the Subscribe Token, then the SST can have any TrackingID you want.
+        // This examples show this.
+        var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
+        if (sampleToken == null) {
+            System.exit(1);
+            return;
+        }
+
+        var generator = new Auth0TokenGenerator();
+        // alternate library for JWT signing
+        //var generator = new JavaJwtTokenGenerator();
+
+        //
+        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
+
+        System.out.println(selfSignToken);
+    }
+
+    private static void CreateSSTWithParentTrackingID(){
+        // If there is a TrackingID in the Subscribe Token, then the SST will need to have the TrackingID to be validated correctly when streaming.
+        // This examples show this.
+        var sampleToken = ParseJson("sampleSSTWithParentTracking.json");
+        if (sampleToken == null) {
+            System.exit(1);
+            return;
+        }
+
+        var generator = new Auth0TokenGenerator();
+        // alternate library for JWT signing
+        //var generator = new JavaJwtTokenGenerator();
+
+        //
+        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
+
+        System.out.println(selfSignToken);
+    }
+
+    private static SampleSubscribeToken ParseJson(String sampleName) {
         var classloader = Thread.currentThread().getContextClassLoader();
 
-        try (var stream = classloader.getResourceAsStream("sampleSST.json");
+        try (var stream = classloader.getResourceAsStream(sampleName);
              var reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
              var buffer = new BufferedReader(reader)) {
             var gson = new Gson();
