@@ -30,7 +30,7 @@ public class Main {
 
 
     private static String CreateSSTWithNoTrackingID(){
-        var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
+        var sampleToken = ParseJson("sampleSST.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
