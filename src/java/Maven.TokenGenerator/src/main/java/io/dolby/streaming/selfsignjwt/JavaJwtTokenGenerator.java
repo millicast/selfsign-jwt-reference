@@ -1,4 +1,4 @@
-package io.dolby.streaming;
+package io.dolby.streaming.selfsignjwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,7 +1,8 @@
-package io.dolby.streaming;
+package io.dolby.streaming.selfsignjwt;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.dolby.streaming.models.JwtPayload;
 
 import java.util.Collections;
 import java.util.List;

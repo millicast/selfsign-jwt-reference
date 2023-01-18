@@ -1,6 +1,6 @@
 {
   "tokenId": 1,
-  "token": "abcdefghijklmnopqrstuvwxyz0123456789",
+  "token": "abcdefghijklmnopqrstuvwxyz012345678jh9",
   "streams": [
     {
         "streamName": "testStream"

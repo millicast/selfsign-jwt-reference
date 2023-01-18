@@ -1,4 +1,4 @@
-package io.dolby.streaming;
+package io.dolby.streaming.selfsignjwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

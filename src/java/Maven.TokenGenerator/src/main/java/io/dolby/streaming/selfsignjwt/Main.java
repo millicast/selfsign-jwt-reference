@@ -1,6 +1,8 @@
-package io.dolby.streaming;
+package io.dolby.streaming.selfsignjwt;
 
 import com.google.gson.Gson;
+import io.dolby.streaming.models.SampleSubscribeToken;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -16,19 +18,19 @@ public class Main {
         // alternate library for JWT signing
         //var generator = new JavaJwtTokenGenerator();
 
-        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.tokenString, sampleToken.streamName);
+        var selfSignToken = generator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName);
 
         System.out.println(selfSignToken);
     }
 
-    private static SampleToken ParseJson() {
+    private static SampleSubscribeToken ParseJson() {
         var classloader = Thread.currentThread().getContextClassLoader();
 
-        try (var stream = classloader.getResourceAsStream("sample.json");
+        try (var stream = classloader.getResourceAsStream("sampleSST.json");
              var reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
              var buffer = new BufferedReader(reader)) {
             var gson = new Gson();
-            return gson.fromJson(buffer, SampleToken.class);
+            return gson.fromJson(buffer, SampleSubscribeToken.class);
         } catch (Exception ex) {
             System.err.println("bad sample json");
             ex.printStackTrace();

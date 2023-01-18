@@ -1,4 +1,4 @@
-package io.dolby.streaming;
+package io.dolby.streaming.models;
 
 import java.util.List;
 

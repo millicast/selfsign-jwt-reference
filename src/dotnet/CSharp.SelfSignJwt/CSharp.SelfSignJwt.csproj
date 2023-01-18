@@ -7,12 +7,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <None Update="sampleSST.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
         <None Update="sampleSelfSigned.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Remove="sampleSST.json" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
