@@ -1,6 +1,5 @@
 
 import jwt
-from ptypes import SampleToken
 
 class TokenGenerator:
     '''Token Generator class.
@@ -14,11 +13,13 @@ class TokenGenerator:
         """
         self.hmac_algorithm = hmac_algorithm
 
-    def create_token(self, token_id:str, token_string:str, stream_name:str, allowed_origins:list=[], allowed_ip_addresses:list=[]):
+    def create_token(self, token_id:int, token_string:str, stream_name:str, allowed_origins:list=[], allowed_ip_addresses:list=[]):
         """Create a token using the provided claims.
 
         :Parameters:
-        - `sample_token`: instance of the class `SampleToken`.
+        - `token_id`: ID to be specified in the token.
+        - `token_string`: Key to use in order to sign the token.
+        - `stream_name`: Stream name to be specified in the token.
         - `allowed_origins`: Origins to be allowed for this token.
         - `allowed_ip_addresses`: Origins to be allowed for this token.
 

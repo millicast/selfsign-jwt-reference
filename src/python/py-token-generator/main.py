@@ -5,8 +5,7 @@ from token_generator import TokenGenerator
 
 def get_sample(filename:str='sample.json'):
     with open(filename) as f:
-        data = f.read()
-        return data
+        return f.read()
 
 def main(sample_token:SampleToken):
     generator = TokenGenerator()
@@ -19,4 +18,5 @@ if '__main__' == __name__:
     if not sample:
         raise Exception('Bad sample json')
     sample_token = SampleToken(**sample)
+
     main(sample_token)
