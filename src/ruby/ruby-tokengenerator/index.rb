@@ -10,7 +10,6 @@ end
 def create_SST_with_custom_tracking_information(generator)
   sample_token = JSON.parse(File.read('../sample-json/sampleSSTWithNoParentTracking.json'))
   customTracking = Tracking.new("custom_tracking_id").to_hash
-  #sample_token['tracking'] = Tracking.new("custom_tracking_id")
   return generator.create_token(sample_token['tokenId'], sample_token['token'], sample_token['streams'][0], nil, nil, customTracking)
 end
 
