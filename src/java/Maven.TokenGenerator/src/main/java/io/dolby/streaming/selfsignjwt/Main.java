@@ -23,9 +23,9 @@ public class Main {
         var sstParentTrackingId = CreateSSTWithParentTrackingID();
 
         System.out.println(
-                "SST with no TrackingID : "+ sstNoTrackingId
-                + "\nSST with custom TrackingID : "+ sstCustomTrackingId
-                + "\nSST with parent TrackingID : "+ sstParentTrackingId);
+                "SST with no TrackingID : "+ sstNoTrackingId +
+                "\nSST with custom TrackingID : "+ sstCustomTrackingId +
+                "\nSST with parent TrackingID : "+ sstParentTrackingId);
     }
 
 
