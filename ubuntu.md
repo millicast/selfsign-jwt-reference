@@ -40,3 +40,9 @@ sudo apt-get install -y dotnet-sdk-6.0
 sudo apt-get update -y
 sudo apt-get install -y openjdk-17-jdk-headless maven
 ```
+
+## Ruby
+```bash
+sudo apt-get update -y
+sudo apt-get install -y ruby-full ruby-bundler build-essential
+```
