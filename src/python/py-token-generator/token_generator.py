@@ -1,5 +1,4 @@
 import datetime
-
 import jwt
 
 
@@ -37,6 +36,7 @@ class TokenGenerator:
         if allowed_ip_addresses is None:
             allowed_ip_addresses = []
 
+        now_utc = datetime.datetime.now(tz=datetime.timezone.utc)
         payload = {
             'streaming': {
                 'tokenId': token_id,
@@ -45,8 +45,9 @@ class TokenGenerator:
                 'allowedOrigins': allowed_origins,
                 'allowedIpAddresses': allowed_ip_addresses
             },
-            'exp': datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(seconds=expires_in)
+            'iat': now_utc,
+            'exp': now_utc + datetime.timedelta(seconds=expires_in)
         }
 
         token = jwt.encode(payload, token_string, algorithm=self.hmac_algorithm)
-        return token.decode()
+        return token

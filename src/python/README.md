@@ -5,7 +5,7 @@
 # Setup & Build
 ```
 python3 -m venv samples
-source venv/bin/activate
+source samples/bin/activate
 pip3 install -r requirements.txt
 ```
 
