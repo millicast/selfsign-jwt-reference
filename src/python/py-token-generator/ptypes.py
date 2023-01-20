@@ -1,9 +1,18 @@
+import json
+
+
+class Tracking:
+
+    def __init__(self, trackingId: str):
+        self.trackingId = trackingId
+
 
 class SampleToken:
-    '''SampleToken type to hold data read from `sample.json` file.
-    '''
+    """SampleToken type to hold data read from sample json files.
+    """
 
-    def __init__(self, tokenId:int, tokenString:str, streamName:str):
+    def __init__(self, tokenId: int, token: str, streams: list[str], tracking: Tracking = None):
         self.token_id = tokenId
-        self.token_string = tokenString
-        self.stream_name = streamName
+        self.token = token
+        self.streams = streams
+        self.tracking = tracking
