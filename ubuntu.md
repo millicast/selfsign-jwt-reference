@@ -46,3 +46,9 @@ sudo apt-get install -y openjdk-17-jdk-headless maven
 sudo apt-get update -y
 sudo apt-get install -y ruby-full ruby-bundler build-essential
 ```
+
+## Python
+```bash
+sudo apt-get update -y
+sudo apt-get install python3-full
+```
