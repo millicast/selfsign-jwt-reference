@@ -50,4 +50,4 @@ class TokenGenerator:
         }
 
         token = jwt.encode(payload, token_string, algorithm=self.hmac_algorithm)
-        return token.decode()
+        return token
