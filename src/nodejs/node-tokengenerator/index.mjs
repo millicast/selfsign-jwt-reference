@@ -19,7 +19,7 @@ console.log('SST with no TrackingID: '+ sstNoTrackingToken +
 
 
 function createSSTWithNoTrackingInformation(){
-  const sampleToken = JSON.parse(readFileSync('sampleSST.json'));
+  const sampleToken = JSON.parse(readFileSync('../../sample-json/sampleSST.json'));
   if (!sampleToken) {
     throw new Error('bad sample json');
   }
@@ -28,7 +28,7 @@ function createSSTWithNoTrackingInformation(){
 }
 
 function createSSTWithParentTrackingInformation(){
-  const sampleToken = JSON.parse(readFileSync('sampleSSTWithParentTracking.json'));
+  const sampleToken = JSON.parse(readFileSync('../../sample-json/sampleSSTWithParentTracking.json'));
   if (!sampleToken) {
     throw new Error('bad sample json');
   }
@@ -37,7 +37,7 @@ function createSSTWithParentTrackingInformation(){
 }
 
 function createSSTWithCustomTrackingInformation(){
-  const sampleToken = JSON.parse(readFileSync('sampleSSTWithNoParentTracking.json'));
+  const sampleToken = JSON.parse(readFileSync('../../sample-json/sampleSSTWithNoParentTracking.json'));
   if (!sampleToken) {
     throw new Error('bad sample json');
   }
