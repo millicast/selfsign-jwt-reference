@@ -48,5 +48,5 @@ class TokenGenerator:
             'exp': datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(seconds=expires_in)
         }
 
-        token = jwt.encode(payload, token_string, self.hmac_algorithm)
-        return token
+        token = jwt.encode(payload, token_string, algorithm=self.hmac_algorithm)
+        return token.decode()
