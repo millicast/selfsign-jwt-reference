@@ -20,11 +20,11 @@ public class TokenGenerator
         IEnumerable<string>? allowedOrigins = null, IEnumerable<string>? allowedIpAddresses = null,
         int expiresIn = 60)
     {
-        // Example for specifying custom TrackingID in the Self Signed Token
-        if (tracking == null)
-        {
-            tracking = new Tracking("customSelfSignedTrackingId");
-        }
+        // // Example for specifying custom TrackingID in the Self Signed Token
+        // if (tracking == null)
+        // {
+        //     tracking = new Tracking("customSelfSignedTrackingId");
+        // }
         var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
 
         var tokenDescriptor = new SecurityTokenDescriptor()

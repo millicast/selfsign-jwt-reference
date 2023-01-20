@@ -7,9 +7,6 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <None Update="sampleSelfSigned.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
         <None Remove="sampleSST.json" />
     </ItemGroup>
     <ItemGroup>

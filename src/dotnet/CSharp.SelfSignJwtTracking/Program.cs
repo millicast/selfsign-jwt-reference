@@ -1,17 +1,17 @@
 ﻿// If there is Tracking already set on the Subscribe Token, then the SST must have the same TrackingID to as the Subscribe Token
 
-var sampleTokenWithTracking = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("sampleWithParentTracking.json"));
-if (sampleTokenWithTracking is null)
+var sampleTokenWithParentTracking = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("../../../../../sample-json/sampleSSTWithParentTracking.json"));
+if (sampleTokenWithParentTracking is null)
 {
     throw new Exception("bad sample json");
 }
 var tokenGenerator = new TokenGenerator();
-var selfSignTokenWithTracking = tokenGenerator.CreateToken(sampleTokenWithTracking.tokenId,
-                                                        sampleTokenWithTracking.token,
-                                                                sampleTokenWithTracking.streams.First().streamName,
-                                                                sampleTokenWithTracking.tracking);
+var selfSignTokenWithParentTracking = tokenGenerator.CreateToken(sampleTokenWithParentTracking.tokenId,
+    sampleTokenWithParentTracking.token,
+    sampleTokenWithParentTracking.streams.First().streamName,
+    sampleTokenWithParentTracking.tracking);
 
-Console.WriteLine(selfSignTokenWithTracking);
+Console.WriteLine("SST With Parent Tracking: "+ selfSignTokenWithParentTracking);
 // Example of JWT payload when created from a Subscribe Token which already has a TrackingID
 /*
  * {
@@ -38,17 +38,18 @@ Console.WriteLine(selfSignTokenWithTracking);
 
 /* If there is not Tracking on the Subscribe Token, then it can be set on the SST. */
 
-var sampleTokenWithNoParentTracking = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("sampleWithNoParentTracking.json"));
+var sampleTokenWithNoParentTracking = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("../../../../../sample-json/sampleSSTWithNoParentTracking.json"));
 if (sampleTokenWithNoParentTracking is null)
 {
     throw new Exception("bad sample json");
 }
 
-var selfSignTokenWithoutTracking = tokenGenerator.CreateToken(sampleTokenWithNoParentTracking.tokenId,
+var customTrackingId = new Tracking("customTrackingId");
+var selfSignTokenWithCustomTracking = tokenGenerator.CreateToken(sampleTokenWithNoParentTracking.tokenId,
     sampleTokenWithNoParentTracking.token,
-    sampleTokenWithNoParentTracking.streams.First().streamName, null);
+    sampleTokenWithNoParentTracking.streams.First().streamName, customTrackingId);
 
-Console.WriteLine(selfSignTokenWithoutTracking);
+Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracking);
 
 // Example of JWT payload when specifying custom TrackingID in the Self Signed token (where the master Subscribe Token does NOT have a TrackingID already)
 /*
@@ -60,7 +61,7 @@ Console.WriteLine(selfSignTokenWithoutTracking);
     "allowedOrigins": [],
     "allowedIpAddresses": [],
     "tracking": {
-      "trackingId": "customSelfSignedTrackingId"
+      "trackingId": "customTrackingId"
     }
   },
   "nbf": 1673934137,
