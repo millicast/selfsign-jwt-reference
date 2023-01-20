@@ -7,6 +7,6 @@ if (!sampleToken) {
 }
 
 const generator = new TokenGenerator();
-const selfSignToken = generator.createToken(sampleToken.tokenId, sampleToken.tokenString, sampleToken.streamName);
+const selfSignToken = generator.createToken(sampleToken['tokenId'], sampleToken['tokenString'], sampleToken['streamName']);
 
 console.log(selfSignToken);
