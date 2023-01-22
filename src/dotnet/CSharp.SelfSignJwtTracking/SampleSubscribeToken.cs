@@ -7,14 +7,14 @@ public class SampleSubscribeToken
     public uint tokenId { get; set; }
     public string token { get; set; }
     public List<TokenStream> streams { get; set; }
-    public Tracking tracking { get;set;}
+    public Tracking? tracking { get;set;}
 
     public SampleSubscribeToken()
     {
         this.streams = new List<TokenStream>();
         this.tokenId = default;
         this.token = string.Empty;
-        this.tracking = new Tracking();
+        this.tracking = null;
     }
 }
 

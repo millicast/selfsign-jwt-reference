@@ -7,9 +7,9 @@ public class Tracking
         this.trackingId = trackingId;
     }
 
-    public Tracking()
-    {
-        this.trackingId = string.Empty;
-    }
-    public string trackingId {get; set;}
+    // public Tracking()
+    // {
+    //     this.trackingId = null;
+    // }
+    public string trackingId { get; set;}
 }

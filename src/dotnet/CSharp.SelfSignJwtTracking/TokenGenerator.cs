@@ -10,21 +10,16 @@ public class TokenGenerator
     {
     }
 
-    public TokenGenerator(string hmacAlg)
+    private TokenGenerator(string hmacAlg)
     {
         _hmacAlg = hmacAlg;
         _tokenHandler = new JwtSecurityTokenHandler();
     }
 
-    public string CreateToken(uint tokenId, string tokenString, string streamName, Tracking tracking,
+    public string CreateToken(uint tokenId, string tokenString, string streamName, Tracking? tracking,
         IEnumerable<string>? allowedOrigins = null, IEnumerable<string>? allowedIpAddresses = null,
         int expiresIn = 60)
     {
-        // // Example for specifying custom TrackingID in the Self Signed Token
-        // if (tracking == null)
-        // {
-        //     tracking = new Tracking("customSelfSignedTrackingId");
-        // }
         var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
 
         var tokenDescriptor = new SecurityTokenDescriptor()
@@ -46,7 +41,7 @@ public class TokenGenerator
     {
         public StreamPayload streaming { get; }
 
-        public JwtPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking tracking)
+        public JwtPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking)
         {
             this.streaming = new StreamPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
         }
@@ -64,9 +59,9 @@ public class TokenGenerator
 
         public IEnumerable<string> allowedIpAddresses { get; }
         
-        public Tracking tracking { get; }
+        public Tracking? tracking { get; }
 
-        public StreamPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking tracking)
+        public StreamPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking)
         {
             this.tokenId = tokenId;
             this.streamName = streamName;
