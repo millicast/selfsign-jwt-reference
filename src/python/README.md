@@ -1,15 +1,15 @@
 # Requirements
-* Python 3.x
+* Python >= 3.3 - https://www.python.org/downloads/
+* Python3 venv
 
 # Setup & Build
 ```
-python3 -mvenv venv
-source venv/bin/activate
-pip install -r requirements.txt
+python3 -m venv samples
+source samples/bin/activate
+pip3 install -r requirements.txt
 ```
 
 # Running sample
 ```
-python main.py
+python3 main.py
 ```
-

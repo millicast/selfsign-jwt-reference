@@ -11,7 +11,7 @@ class TokenGenerator:
         """Instantiate the token generator.
 
         :Parameter:
-        - `hmac_algorithm`: The alhorithm to use to sign the token.
+        - `hmac_algorithm`: The algorithm to use to sign the token.
         """
         self.hmac_algorithm = hmac_algorithm
 
@@ -31,6 +31,13 @@ class TokenGenerator:
         :Returns:
         - Signed JWT containing the claims provided as parameters.
         """
+
+        if allowed_origins is None:
+            allowed_origins = []
+        if allowed_ip_addresses is None:
+            allowed_ip_addresses = []
+
+        now_utc = datetime.datetime.now(tz=datetime.timezone.utc)
         payload = {
             'streaming': {
                 'tokenId': token_id,
