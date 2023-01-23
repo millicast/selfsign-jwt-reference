@@ -23,21 +23,21 @@ public abstract class BaseTokenGenerator {
         _hmacAlg = hmacAlg;
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, Tracking tracking) {
-        return CreateToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), DefaultExpiresIn, tracking);
+    public String createToken(long tokenId, String tokenString, String streamName, Tracking tracking) {
+        return createToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), DefaultExpiresIn, tracking);
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, int expiresIn, Tracking tracking) {
-        return CreateToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), expiresIn, tracking);
+    public String createToken(long tokenId, String tokenString, String streamName, int expiresIn, Tracking tracking) {
+        return createToken(tokenId, tokenString, streamName, Collections.<String>emptyList(), Collections.<String>emptyList(), expiresIn, tracking);
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
-        return CreateToken(tokenId, tokenString, streamName, allowedOrigins, allowedIpAddresses, DefaultExpiresIn, tracking);
+    public String createToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
+        return createToken(tokenId, tokenString, streamName, allowedOrigins, allowedIpAddresses, DefaultExpiresIn, tracking);
     }
 
-    public abstract String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking);
+    public abstract String createToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking);
 
-    protected static Map<String, ?> CreatePayload(long tokenId, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
+    protected static Map<String, ?> createPayload(long tokenId, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, Tracking tracking) {
         var mapper = new ObjectMapper();
 
         var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);

@@ -18,24 +18,24 @@ public class JavaJwtTokenGenerator extends BaseTokenGenerator {
         super(hmacAlg);
     }
 
-    public String CreateToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking) {
+    public String createToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking) {
         var secretKey = Keys.hmacShaKeyFor(tokenString.getBytes(StandardCharsets.US_ASCII));
 
         var now = new Date();
         now.setTime(now.getTime() + expiresIn);
 
-        var payload = CreatePayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
+        var payload = createPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
 
         var builder = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setClaims(payload)
                 .setExpiration(now)
-                .signWith(secretKey, GetSignatureAlgorithm());
+                .signWith(secretKey, getSignatureAlgorithm());
 
         return builder.compact();
     }
 
-    private SignatureAlgorithm GetSignatureAlgorithm() {
+    private SignatureAlgorithm getSignatureAlgorithm() {
         switch (_hmacAlg) {
             case "HS256":
                 return SignatureAlgorithm.HS256;

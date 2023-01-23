@@ -14,13 +14,13 @@ public class Main {
     public static void main(String[] args) {
 
         // If there is no TrackingID on the Subscribe Token, we dont need to set one on the Self Signed Token
-        var sstNoTrackingId = CreateSSTWithNoTrackingID();
+        var sstNoTrackingId = createSSTWithNoTrackingID();
 
         // If there is no TrackingID in the Subscribe Token, we can set a Custom TrackingID for a specific Self Signed Token
-        var sstCustomTrackingId = CreateSSTWithCustomTrackingID();
+        var sstCustomTrackingId = createSSTWithCustomTrackingID();
 
         // If there is a TrackingID in the Subscribe Token, we need to set the same TrackingID on the Self Signed Token
-        var sstParentTrackingId = CreateSSTWithParentTrackingID();
+        var sstParentTrackingId = createSSTWithParentTrackingID();
 
         System.out.println(
                 "SST with no TrackingID : "+ sstNoTrackingId +
@@ -29,14 +29,18 @@ public class Main {
     }
 
 
-    private static String CreateSSTWithNoTrackingID(){
-        var sampleToken = ParseJson("sampleSST.json");
+    /**
+     * If there is no TrackingID in the Subscribe Token, we don't have to set a TrackingID in the SST if we don't want to.
+     * @return An example JWT with no TrackingID.
+     */
+    private static String createSSTWithNoTrackingID(){
+        var sampleToken = parseJson("sampleSST.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
         }
 
-        return _tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, null);
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, null);
         /*
         {
           "streaming": {
@@ -52,16 +56,20 @@ public class Main {
          */
     }
 
-    private static String CreateSSTWithCustomTrackingID(){
+    /**
+     * If there is no TrackingID in the Subscribe Token, then the SST can have any TrackingID you want.
+     * @return An example JWT with a custom TrackingID.
+     */
+    private static String createSSTWithCustomTrackingID(){
         // If there is no TrackingID in the Subscribe Token, then the SST can have any TrackingID you want.
 
-        var sampleToken = ParseJson("sampleSSTWithNoParentTracking.json");
+        var sampleToken = parseJson("sampleSSTWithNoParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
         }
 
-        return _tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, new Tracking("SSTOnlyTrackingId"));
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, new Tracking("SSTOnlyTrackingId"));
         /*
         {
             "streaming": {
@@ -79,16 +87,18 @@ public class Main {
          */
     }
 
-    private static String CreateSSTWithParentTrackingID(){
-        // If there is a TrackingID in the Subscribe Token, then the SST will need to have the TrackingID to be validated correctly when streaming.
-        // This examples show this.
-        var sampleToken = ParseJson("sampleSSTWithParentTracking.json");
+    /**
+     * If there is a TrackingID in the Subscribe Token, then the SST will need to have the TrackingID to be validated correctly when viewing a stream.
+     * @return An example JWT with the TrackingID the same as the parent.
+     */
+    private static String createSSTWithParentTrackingID(){
+        var sampleToken = parseJson("sampleSSTWithParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
         }
 
-        return _tokenGenerator.CreateToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
         /*
         {
           "streaming": {
@@ -106,7 +116,12 @@ public class Main {
          */
     }
 
-    private static SampleSubscribeToken ParseJson(String sampleName) {
+    /**
+     * If there is a TrackingID in the Subscribe Token, then the SST will need to have the TrackingID to be validated correctly when viewing a stream.
+     * @param sampleName The JSON file with the master subscribe token
+     * @return A model representing the master subscribe token.
+     */
+    private static SampleSubscribeToken parseJson(String sampleName) {
         var classloader = Thread.currentThread().getContextClassLoader();
 
         try (var stream = classloader.getResourceAsStream(sampleName);
