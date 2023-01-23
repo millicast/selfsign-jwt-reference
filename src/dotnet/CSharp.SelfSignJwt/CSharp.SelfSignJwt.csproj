@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="sampleSST.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <Using Include="System.IdentityModel.Tokens.Jwt" />
+        <Using Include="System.Text" />
+        <Using Include="System.Text.Json" />
+        <Using Include="Microsoft.IdentityModel.Tokens" />
+        <Using Include="CSharp.SelfSignJwt" />
+    </ItemGroup>
+</Project>
