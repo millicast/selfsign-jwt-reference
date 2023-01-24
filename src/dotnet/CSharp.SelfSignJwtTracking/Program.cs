@@ -14,7 +14,7 @@ if (sampleTokenWithNoParentTracking is null)
 var selfSignTokenWithNoTracking = tokenGenerator.CreateToken(sampleTokenWithNoParentTracking.tokenId,
     sampleTokenWithNoParentTracking.token,
     sampleTokenWithNoParentTracking.streams.First().streamName,
-    sampleTokenWithNoParentTracking.tracking, expiresIn:100000);
+    sampleTokenWithNoParentTracking.tracking);
 
 Console.WriteLine("SST With No Tracking enabled: "+ selfSignTokenWithNoTracking);
 
@@ -53,8 +53,7 @@ if (sampleTokenWithParentTracking is null)
 var selfSignTokenWithParentTracking = tokenGenerator.CreateToken(sampleTokenWithParentTracking.tokenId,
     sampleTokenWithParentTracking.token,
     sampleTokenWithParentTracking.streams.First().streamName,
-    sampleTokenWithParentTracking.tracking,
-    expiresIn:100000);
+    sampleTokenWithParentTracking.tracking);
 
 Console.WriteLine("SST With Parent Tracking: "+ selfSignTokenWithParentTracking);
 
@@ -89,7 +88,7 @@ if (sampleTokenWithCustomTrackingId is null)
 var customTrackingId = new Tracking("customTrackingId");
 var selfSignTokenWithCustomTracking = tokenGenerator.CreateToken(sampleTokenWithCustomTrackingId.tokenId,
     sampleTokenWithCustomTrackingId.token,
-    sampleTokenWithCustomTrackingId.streams.First().streamName, customTrackingId, expiresIn:100000);
+    sampleTokenWithCustomTrackingId.streams.First().streamName, customTrackingId);
 
 Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracking);
 
