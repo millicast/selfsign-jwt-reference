@@ -20,7 +20,7 @@ def main():
     sst_with_no_tracking_info = generator.create_token(no_tracking_sample.id,
                                                        no_tracking_sample.token,
                                                        no_tracking_sample.streams[0]['streamName'],
-                                                       no_tracking_sample.tracking, expires_in=99999999999)
+                                                       no_tracking_sample.tracking)
 
     # If there is a TrackingID in the Subscribe Token, we need to set the same TrackingID on the Self Signed Token
     parent_tracking_sample = get_sample('../../sample-json/sampleSSTWithParentTracking.json')
