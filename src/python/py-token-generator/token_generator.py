@@ -1,5 +1,6 @@
-import datetime
 import jwt
+from ptypes import Tracking
+import datetime
 
 
 class TokenGenerator:
@@ -14,9 +15,8 @@ class TokenGenerator:
         """
         self.hmac_algorithm = hmac_algorithm
 
-    def create_token(self, token_id: int, token_string: str, stream_name: str,
-                     allowed_origins: list = None, allowed_ip_addresses: list = None,
-                     expires_in: int = 60):
+    def create_token(self, token_id: int, token: str, stream_name: str, tracking: Tracking = None,
+                     allowed_origins: list = [], allowed_ip_addresses: list = [], expires_in: int = 60):
         """Create a token using the provided claims.
 
         :Parameters:
@@ -25,6 +25,7 @@ class TokenGenerator:
         - `stream_name`: Stream name to be specified in the token.
         - `allowed_origins`: Origins to be allowed for this token.
         - `allowed_ip_addresses`: Origins to be allowed for this token.
+        - `tracking` : Tracking information
         - `expires_in`: Number of seconds before token expires.
 
         :Returns:
@@ -43,11 +44,11 @@ class TokenGenerator:
                 'tokenType': 'Subscribe',
                 'streamName': stream_name,
                 'allowedOrigins': allowed_origins,
-                'allowedIpAddresses': allowed_ip_addresses
+                'allowedIpAddresses': allowed_ip_addresses,
+                'tracking': tracking
             },
-            'iat': now_utc,
-            'exp': now_utc + datetime.timedelta(seconds=expires_in)
+            'exp': datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(seconds=expires_in)
         }
 
-        token = jwt.encode(payload, token_string, algorithm=self.hmac_algorithm)
+        token = jwt.encode(payload, token, self.hmac_algorithm)
         return token

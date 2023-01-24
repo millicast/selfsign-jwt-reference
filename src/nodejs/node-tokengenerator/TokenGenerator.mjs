@@ -12,19 +12,21 @@ export default class TokenGenerator {
   /**
    *
    * @param {number} tokenId
-   * @param {string} tokenString
+   * @param {string} token
    * @param {string} streamName
    * @param {string[]=} allowedOrigins
    * @param {string[]=} allowedIpAddresses
+   * @param {Tracking} tracking
    * @param {number} [expiresIn = 60]
    * @returns {string}
    */
-  createToken(tokenId, tokenString, streamName, allowedOrigins, allowedIpAddresses, expiresIn = 60) {
+  createToken(tokenId, token, streamName, allowedOrigins, allowedIpAddresses , tracking, expiresIn = 60) {
     const payload = {
       streaming: {
         tokenId: tokenId,
         tokenType: 'Subscribe',
         streamName: streamName,
+        tracking: tracking ?? null,
         allowedOrigins: allowedOrigins ?? [],
         allowedIpAddresses: allowedIpAddresses ?? []
       }
@@ -35,6 +37,6 @@ export default class TokenGenerator {
       expiresIn: expiresIn
     };
 
-    return JsonWebToken.sign(payload, tokenString, signOptions);
+    return JsonWebToken.sign(payload, token, signOptions);
   }
 }
