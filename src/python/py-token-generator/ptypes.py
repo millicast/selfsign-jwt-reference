@@ -11,8 +11,8 @@ class SampleToken:
     """SampleToken type to hold data read from sample json files.
     """
 
-    def __init__(self, tokenId: int, token: str, streams: list[str], tracking: Tracking = None):
-        self.token_id = tokenId
+    def __init__(self, id: int, token: str, streams: list[str], tracking: Tracking = None):
+        self.id = id
         self.token = token
         self.streams = streams
         self.tracking = tracking

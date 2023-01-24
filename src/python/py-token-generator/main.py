@@ -17,14 +17,14 @@ def main():
 
     # If there is no TrackingID on the Subscribe Token, we don't need to set one on the Self Signed Token
     no_tracking_sample = get_sample('../../sample-json/sampleSST.json')
-    sst_with_no_tracking_info = generator.create_token(no_tracking_sample.token_id,
+    sst_with_no_tracking_info = generator.create_token(no_tracking_sample.id,
                                                        no_tracking_sample.token,
                                                        no_tracking_sample.streams[0]['streamName'],
-                                                       no_tracking_sample.tracking)
+                                                       no_tracking_sample.tracking, expires_in=99999999999)
 
     # If there is a TrackingID in the Subscribe Token, we need to set the same TrackingID on the Self Signed Token
     parent_tracking_sample = get_sample('../../sample-json/sampleSSTWithParentTracking.json')
-    sst_with_parent_tracking_info = generator.create_token(parent_tracking_sample.token_id,
+    sst_with_parent_tracking_info = generator.create_token(parent_tracking_sample.id,
                                                            parent_tracking_sample.token,
                                                            parent_tracking_sample.streams[0]['streamName'],
                                                            parent_tracking_sample.tracking)
@@ -32,7 +32,7 @@ def main():
     # If there is no TrackingID in the Subscribe Token, we can set a Custom TrackingID for a specific Self Signed Token
     custom_tracking_sample = get_sample('../../sample-json/sampleSSTWithNoParentTracking.json')
     custom_tracking_id = Tracking("custom_tracking_id")
-    sst_with_custom_tracking_info = generator.create_token(custom_tracking_sample.token_id,
+    sst_with_custom_tracking_info = generator.create_token(custom_tracking_sample.id,
                                                            custom_tracking_sample.token,
                                                            custom_tracking_sample.streams[0]['streamName'],
                                                            custom_tracking_id.__dict__)
