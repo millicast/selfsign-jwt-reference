@@ -40,7 +40,7 @@ public class Main {
             return null;
         }
 
-        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, null);
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
         /*
         {
           "streaming": {
