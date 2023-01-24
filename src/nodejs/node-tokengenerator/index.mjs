@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import TokenGenerator from './TokenGenerator.mjs';
 import Tracking from "./Tracking.mjs";
+import ModifiedSampleToken from "./ModifiedSampleToken.mjs";
 
 const generator = new TokenGenerator();
 
@@ -24,7 +25,16 @@ function createSSTWithNoTrackingInformation(){
     throw new Error('bad sample json');
   }
 
-  return generator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams[0].streamName, null, null, null);
+  let modifiedSampleToken = new ModifiedSampleToken(sampleToken.id,
+                                                    sampleToken.token,
+                                                    sampleToken.streams,
+                                                    sampleToken.allowedOrigins,
+                                                    sampleToken.allowedIpAddresses,
+                                                    sampleToken.tracking)
+
+  modifiedSampleToken.fromJson();
+
+  return generator.createToken(modifiedSampleToken.id, modifiedSampleToken.token, modifiedSampleToken.streams[0].streamName, null, null, null);
 }
 
 function createSSTWithParentTrackingInformation(){
@@ -33,7 +43,16 @@ function createSSTWithParentTrackingInformation(){
     throw new Error('bad sample json');
   }
 
-  return generator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams[0].streamName, null, null, sampleToken.tracking);
+  let modifiedSampleToken = new ModifiedSampleToken(sampleToken.id,
+      sampleToken.token,
+      sampleToken.streams,
+      sampleToken.allowedOrigins,
+      sampleToken.allowedIpAddresses,
+      sampleToken.tracking)
+
+  modifiedSampleToken.fromJson();
+
+  return generator.createToken(modifiedSampleToken.id, modifiedSampleToken.token, modifiedSampleToken.streams[0].streamName, null, null, modifiedSampleToken.tracking, 99999999);
 }
 
 function createSSTWithCustomTrackingInformation(){
@@ -42,5 +61,13 @@ function createSSTWithCustomTrackingInformation(){
     throw new Error('bad sample json');
   }
 
-  return generator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams[0].streamName, null, null, new Tracking("customTrackingId"));
+  let modifiedSampleToken = new ModifiedSampleToken(sampleToken.id,
+      sampleToken.token,
+      sampleToken.streams,
+      sampleToken.allowedOrigins,
+      sampleToken.allowedIpAddresses,
+      sampleToken.tracking)
+
+  modifiedSampleToken.fromJson();
+  return generator.createToken(modifiedSampleToken.id, modifiedSampleToken.token, modifiedSampleToken.streams[0].streamName, null, null, new Tracking("customTrackingId"));
 }
