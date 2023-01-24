@@ -14,25 +14,27 @@ if (sampleTokenWithNoParentTracking is null)
 var selfSignTokenWithNoTracking = tokenGenerator.CreateToken(sampleTokenWithNoParentTracking.tokenId,
     sampleTokenWithNoParentTracking.token,
     sampleTokenWithNoParentTracking.streams.First().streamName,
-    sampleTokenWithNoParentTracking.tracking);
+    sampleTokenWithNoParentTracking.tracking, expiresIn:100000);
 
 Console.WriteLine("SST With No Tracking enabled: "+ selfSignTokenWithNoTracking);
 
 // Example JWT payload, when we don't set a TrackingID (and the Master Subscribe Token doesn't have Tracking)
 /*
     {
-      "streaming": {
-        "tokenId": 1,
-        "tokenType": "Subscribe",
-        "streamName": "testStream",
-        "allowedOrigins": [],
-        "allowedIpAddresses": [],
-        "tracking": null
-      },
-      "nbf": 1674430010,
-      "exp": 1674430070,
-      "iat": 1674430010
+  "streaming": {
+    "tokenId": 373,
+    "tokenType": "Subscribe",
+    "streamName": "stream1",
+    "allowedOrigins": [],
+    "allowedIpAddresses": [],
+    "tracking": {
+      "trackingId": null
     }
+  },
+  "nbf": 1674521386,
+  "exp": 1674521446,
+  "iat": 1674521386
+}
  */
 
 
@@ -51,7 +53,8 @@ if (sampleTokenWithParentTracking is null)
 var selfSignTokenWithParentTracking = tokenGenerator.CreateToken(sampleTokenWithParentTracking.tokenId,
     sampleTokenWithParentTracking.token,
     sampleTokenWithParentTracking.streams.First().streamName,
-    sampleTokenWithParentTracking.tracking);
+    sampleTokenWithParentTracking.tracking,
+    expiresIn:100000);
 
 Console.WriteLine("SST With Parent Tracking: "+ selfSignTokenWithParentTracking);
 
@@ -86,7 +89,7 @@ if (sampleTokenWithCustomTrackingId is null)
 var customTrackingId = new Tracking("customTrackingId");
 var selfSignTokenWithCustomTracking = tokenGenerator.CreateToken(sampleTokenWithCustomTrackingId.tokenId,
     sampleTokenWithCustomTrackingId.token,
-    sampleTokenWithCustomTrackingId.streams.First().streamName, customTrackingId);
+    sampleTokenWithCustomTrackingId.streams.First().streamName, customTrackingId, expiresIn:100000);
 
 Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracking);
 

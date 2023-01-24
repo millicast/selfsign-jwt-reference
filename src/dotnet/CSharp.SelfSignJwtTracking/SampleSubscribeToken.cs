@@ -1,9 +1,11 @@
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace CSharp.SelfSignJwtTracking;
 
 public class SampleSubscribeToken
 {
+    [JsonPropertyName("id")]
     public uint tokenId { get; set; }
     public string token { get; set; }
     public List<TokenStream> streams { get; set; }
