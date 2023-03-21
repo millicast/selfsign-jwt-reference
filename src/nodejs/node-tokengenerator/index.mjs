@@ -24,7 +24,22 @@ function createSSTWithNoTrackingInformation(){
     throw new Error('bad sample json');
   }
 
-  return generator.createToken(sampleToken.id, sampleToken.token, sampleToken.streams[0].streamName, null, null, null);
+  // If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+  // If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used
+  let streamName = "";
+  if (sampleToken.streams.length == 1 && sampleToken.streams[0].streamName == ".*"){
+
+    // if there's only one streamName in MST, and it's global then we have to set the streamName ourselves
+    streamName = "customStreamName";
+  }
+  else{
+    // choose one streamName from MST (that's not the global .*) to include in the SST
+    streamName = sampleToken.streams.filter(c => {
+      return c.streamName != ".*"
+    })[0].streamName;
+  }
+
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName, null, null, null);
 }
 
 function createSSTWithParentTrackingInformation(){
@@ -33,7 +48,22 @@ function createSSTWithParentTrackingInformation(){
     throw new Error('bad sample json');
   }
 
-  return generator.createToken(sampleToken.id, sampleToken.token, sampleToken.streams[0].streamName, null, null, sampleToken.tracking);
+  // If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+  // If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used
+  let streamName = "";
+  if (sampleToken.streams.length == 1 && sampleToken.streams[0].streamName == ".*"){
+
+    // if there's only one streamName in MST, and it's global then we have to set the streamName ourselves
+    streamName = "customStreamName";
+  }
+  else{
+    // choose one streamName from MST (that's not the global .*) to include in the SST
+    streamName = sampleToken.streams.filter(c => {
+      return c.streamName != ".*"
+    })[0].streamName;
+  }
+
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName, null, null, sampleToken.tracking);
 }
 
 function createSSTWithCustomTrackingInformation(){
@@ -42,5 +72,20 @@ function createSSTWithCustomTrackingInformation(){
     throw new Error('bad sample json');
   }
 
-  return generator.createToken(sampleToken.id, sampleToken.token, sampleToken.streams[0].streamName, null, null, new Tracking("customTrackingId"));
+  // If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+  // If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used
+  let streamName = "";
+  if (sampleToken.streams.length == 1 && sampleToken.streams[0].streamName == ".*"){
+
+    // if there's only one streamName in MST, and it's global then we have to set the streamName ourselves
+    streamName = "customStreamName";
+  }
+  else{
+    // choose one streamName from MST (that's not the global .*) to include in the SST
+    streamName = sampleToken.streams.filter(c => {
+      return c.streamName != ".*"
+    })[0].streamName;
+  }
+
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName, null, null, new Tracking("customTrackingId"));
 }
