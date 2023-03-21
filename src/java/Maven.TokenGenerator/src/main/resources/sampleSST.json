@@ -3,7 +3,11 @@
     "token": "abcdefghijklmnopqrstuvwxyz012345678jh9",
     "streams": [
       {
-          "streamName": "testStream"
+          "streamName": ".*",
+          "isRegex": true
+      },
+      {
+        "streamName": "test"
       }
     ],
     "tracking": {}

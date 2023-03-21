@@ -39,8 +39,25 @@ public class Main {
             System.exit(1);
             return null;
         }
+        var streamName = "";
+        // If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+        // If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used
 
-        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
+        if (sampleToken.streams.size() == 1 &&
+                sampleToken.streams.get(0).streamName.equals(".*"))
+        {
+            // if there's only one streamName in MST, and it's global then we have to set the streamName ourselves
+            streamName = "lfbt28hq";
+        }
+        else
+        {
+            // choose one streamName from MST (that's not the global .*) to include in the SST
+            sampleToken.streams.removeIf(c -> c.streamName.equals(".*"));
+            streamName = sampleToken.streams.get(0).streamName;
+        }
+
+
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, streamName, sampleToken.tracking);
         /*
         {
           "streaming": {
@@ -69,7 +86,24 @@ public class Main {
             return null;
         }
 
-        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, new Tracking("SSTOnlyTrackingId"));
+        var streamName = "";
+        // If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+        // If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used. This can be custom
+
+        if (sampleToken.streams.size() == 1 &&
+                sampleToken.streams.get(0).streamName.equals(".*"))
+        {
+            // if there's only one streamName in MST, and it's global then we have to set the streamName ourselves
+            streamName = "lfbt28hq";
+        }
+        else
+        {
+            // choose one streamName from MST (that's not the global .*) to include in the SST
+            sampleToken.streams.removeIf(c -> c.streamName.equals(".*"));
+            streamName = sampleToken.streams.get(0).streamName;
+        }
+
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, streamName, new Tracking("SSTOnlyTrackingId"));
         /*
         {
             "streaming": {
@@ -98,7 +132,24 @@ public class Main {
             return null;
         }
 
-        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, sampleToken.streams.get(0).streamName, sampleToken.tracking);
+        var streamName = "";
+        // If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+        // If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used. This can be custom
+
+        if (sampleToken.streams.size() == 1 &&
+                sampleToken.streams.get(0).streamName.equals(".*"))
+        {
+            // if there's only one streamName in MST, and it's global then we have to set the streamName ourselves
+            streamName = "lfbt28hq";
+        }
+        else
+        {
+            // choose one streamName from MST (that's not the global .*) to include in the SST
+            sampleToken.streams.removeIf(c -> c.streamName.equals(".*"));
+            streamName = sampleToken.streams.get(0).streamName;
+        }
+
+        return _tokenGenerator.createToken(sampleToken.tokenId, sampleToken.token, streamName, sampleToken.tracking);
         /*
         {
           "streaming": {
