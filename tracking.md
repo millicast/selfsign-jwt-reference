@@ -12,7 +12,10 @@ If the `MST` has no `TrackingId` present, and you don't care about tracking, the
 There are some rules that need to be followed in order for the SST to work with `Tracking`.
 * If the `MST` has no `TrackingId` present, then your `SST` can have **any** `TrackingId` you wish
 * If the `MST` has a `TrackingId`, then your `SST` will need to be set with the **same** `TrackingId`
-
+* The `SST` created can only have one `Stream Name` which will need to be matched to a `Stream Name` from the `MST`
+  * If the `MST` has global `".*"` with regex, then the `Stream Name` can be any `Stream Name`
+  * If the `MST ` has specific streams in it, then the `SST` **must match one of them**.
+  
 ## Verifying the Token
 
 Verifying the payload can be done with a decoding tool like [jwt.io](http://jwt.io)
