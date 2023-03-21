@@ -1,12 +1,14 @@
 {
-    "id": 1,
-    "token": "abcdefghijklmnopqrstuvwxyz012345678jh9",
-    "streams": [
-      {
-          "streamName": "stream1"
-      }
-    ],
     "tracking": {
-      "trackingId": "test"
-    }
-}
+            "trackingId": "mst-2-analytics-test"
+        },
+        "id": 541,
+        "token": "token",
+        "streams": [
+            {
+                "streamName": ".*",
+                "isRegex": true
+            }
+        ],
+        "originCluster": "do-sfo-legacy"
+        }

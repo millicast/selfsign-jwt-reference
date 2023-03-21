@@ -1,10 +1,18 @@
 {
-    "id": 1,
-    "token": "abcdefghijklmnopqrstuvwxyz012345678jh9",
-    "streams": [
-      {
-          "streamName": "stream1"
-      }
-    ],
-    "tracking": {}
+    "tracking": {
+            "trackingId": "nick"
+        },
+        "id": 527,
+        "token": "tokenString",
+        "streams": [
+            {
+                "streamName": ".*",
+                "isRegex": true
+            },
+            {
+                "streamName": "lday0h9i",
+                "isRegex": false
+            }
+        ],
+        "originCluster": "do-sfo-legacy"
 }

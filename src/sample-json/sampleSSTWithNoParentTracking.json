@@ -1,10 +1,12 @@
 {
-    "id": 1,
-    "token": "abcdefghijklmnopqrstuvwxyz012345678jh9",
-    "streams": [
-        {
-            "streamName": "stream1"
+    "id": 543,
+        "token": "token",
+        "streams": [
+            {
+                "streamName": ".*",
+                "isRegex": true
+            }
+        ],
+
+        "originCluster": "do-sfo-devlegacy"
         }
-    ],
-    "tracking":{}
-}
