@@ -1,6 +1,6 @@
 ﻿
 var tokenGenerator = new TokenGenerator();
-
+var streamName = string.Empty;
 /*
  * If there is no TrackingID on the Subscribe Token, we dont need to set one on the Self Signed Token if we don't want to.
  */
@@ -14,7 +14,7 @@ if (sampleTokenWithNoParentTracking is null)
 var selfSignTokenWithNoTracking = tokenGenerator.CreateToken(sampleTokenWithNoParentTracking.tokenId,
     sampleTokenWithNoParentTracking.token,
     sampleTokenWithNoParentTracking.streams.First().streamName,
-    sampleTokenWithNoParentTracking.tracking);
+    sampleTokenWithNoParentTracking.tracking, expiresIn: 99999999);
 
 Console.WriteLine("SST With No Tracking enabled: "+ selfSignTokenWithNoTracking);
 
@@ -50,10 +50,25 @@ if (sampleTokenWithParentTracking is null)
     throw new Exception("bad sample json");
 }
 
+// If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+// If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used
+
+if (sampleTokenWithParentTracking.streams.Count == 1 &&
+    sampleTokenWithParentTracking.streams.First().streamName == ".*")
+{
+    // if there's only one streamName in MST and it's global then we have to set the streamName ourselves
+    streamName = "lfbt28hq";
+}
+else
+{
+    // choose one streamName from MST (that's not the global .*) to include in the SST
+    streamName = sampleTokenWithParentTracking.streams.First(c => c.streamName != ".*").streamName;
+}
+
 var selfSignTokenWithParentTracking = tokenGenerator.CreateToken(sampleTokenWithParentTracking.tokenId,
     sampleTokenWithParentTracking.token,
-    sampleTokenWithParentTracking.streams.First().streamName,
-    sampleTokenWithParentTracking.tracking);
+    streamName,
+    sampleTokenWithParentTracking.tracking, expiresIn:99999999);
 
 Console.WriteLine("SST With Parent Tracking: "+ selfSignTokenWithParentTracking);
 
@@ -85,10 +100,24 @@ if (sampleTokenWithCustomTrackingId is null)
     throw new Exception("bad sample json");
 }
 
-var customTrackingId = new Tracking("customTrackingId");
+// If the MST has streamNames, then the SST streamName has to match with atleast one in MST streamNames.
+// If there's only Regex in there (so global ".*"), then we need to specify an actual streamName to be used
+
+if (sampleTokenWithCustomTrackingId.streams.Count == 1 &&
+    sampleTokenWithCustomTrackingId.streams.First().streamName == ".*")
+{
+    // if there's only one streamName in MST and it's global then we have to set the streamName ourselves
+    streamName = "lfbt28hq";
+}
+else
+{
+    // choose one streamName from MST (that's not the global .*) to include in the SST
+    streamName = sampleTokenWithCustomTrackingId.streams.First(c => c.streamName != ".*").streamName;
+}
+var customTrackingId = new Tracking("customTrackingId2");
 var selfSignTokenWithCustomTracking = tokenGenerator.CreateToken(sampleTokenWithCustomTrackingId.tokenId,
     sampleTokenWithCustomTrackingId.token,
-    sampleTokenWithCustomTrackingId.streams.First().streamName, customTrackingId);
+    streamName, customTrackingId,  expiresIn: 99999999);
 
 Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracking);
 
