@@ -1,14 +1,21 @@
 {
     "tracking": {
-            "trackingId": "mst-2-analytics-test"
+            "trackingId": "mst-pvt-tracking-2"
         },
-        "id": 541,
-        "token": "token",
+        "id": 853884780,
+        "label": "mst-pvt-tracking-2",
+        "token": "d88052c37ee904c91df213e3dda2d0f13891ad7600bb26920abf8d258ff4476c",
+        "addedOn": "2023-03-27T03:52:40Z",
+        "isActive": true,
         "streams": [
             {
                 "streamName": ".*",
                 "isRegex": true
             }
         ],
+        "allowedOrigins": [],
+        "allowedIpAddresses": [],
+        "allowedCountries": [],
+        "deniedCountries": [],
         "originCluster": "do-sfo-legacy"
         }

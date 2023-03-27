@@ -1,9 +1,6 @@
 {
-    "tracking": {
-            "trackingId": "nick"
-        },
         "id": 527,
-        "token": "tokenString",
+        "token": "tokenStringtokenStringtokenStringtokenStringtokenStringtokenString",
         "streams": [
             {
                 "streamName": ".*",

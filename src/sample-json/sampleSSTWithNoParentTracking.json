@@ -1,12 +1,14 @@
 {
-    "id": 543,
-        "token": "token",
+    "tracking": {
+            "trackingId": "test-test-test"
+        },
+        "id": 541,
+        "token": "tokentokentokentokentokentokentokentokentokentokentokentokentokentokentoken",
         "streams": [
             {
                 "streamName": ".*",
                 "isRegex": true
             }
         ],
-
-        "originCluster": "do-sfo-devlegacy"
-        }
+        "originCluster": "do-sfo-legacy"
+}
