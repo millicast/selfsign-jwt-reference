@@ -1,9 +1,9 @@
 # Dolby.io Streaming Self-signed JWT Reference
 
 This repository shows how to create a self-signed subscriber token for use with [Dolby.io Real-time Streaming](https://dolby.io/products/real-time-streaming/).
-See our [Self-signed token guide](https://docs.dolby.io/streaming-apis/docs/self-signed-tokens) for more information about self-signing tokens.
+See our [Self-signed token guide](https://docs.dolby.io/streaming-apis/docs/self-signed-subscribe-tokens) for more information about self-signing tokens.
 
-We can also track bandwidth usage with each of our self-signed tokens. See our [Tracking with self-signed tokens guide](https://docs.dolby.io/streaming-apis/docs/self-signed-tokens) or the [README](./tracking.md) for more information.
+We can also track bandwidth usage with each of our self-signed tokens. See our [Tracking with self-signed tokens guide](https://docs.dolby.io/streaming-apis/docs/syndication#tracking-with-self-signed-subscribe-tokens) or the [README](./tracking.md) for more information.
 
 Once created, the token can be used as the bearer token in a request to the [Subscribe API](https://docs.dolby.io/streaming-apis/reference/director_subscribe)
 
@@ -24,7 +24,7 @@ For each sample app, we have shown 3 scenarios for creating the SST.
 * [Node.js](./src/nodejs/README.md)
 * [Python](./src/python/README.md)
 * [Ruby](./src/ruby/README.md)
-* 
+  
 All samples have been tested on Ubuntu 22.04.
 
 ## Details

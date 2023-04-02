@@ -3,7 +3,7 @@
 
 ## Understanding Tracking
 We now have the functionality to track bandwidth statistics across self-signed tokens (SST). The way we do this is by a `Tracking` section in the SST and setting a specific `TrackingId`.
-Any owner of the **Master Subscribe Token (MST)** can then view bandwidth usage for per SST using our APIs. For API Documentation, see [here](webaddress)
+Any owner of the **Master Subscribe Token (MST)** can then view bandwidth usage for per SST using our APIs. For Analytics API Documentation, see [here](https://apidocs.millicast.com/redoc/#tag/Analytics)
 
 If the `MST` has no `TrackingId` present, and you don't care about tracking, then **you do not** need to specify one in the `SST`. However, the `SST` will **not be tracked** for analytics.
 
