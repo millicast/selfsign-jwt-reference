@@ -34,7 +34,7 @@ public class Main {
      * @return An example JWT with no TrackingID.
      */
     private static String createSSTWithNoTrackingID(){
-        var sampleToken = parseJson("sampleSST.json");
+        var sampleToken = parseJson("../../sample-json/sampleSST.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
@@ -80,7 +80,7 @@ public class Main {
     private static String createSSTWithCustomTrackingID(){
         // If there is no TrackingID in the Subscribe Token, then the SST can have any TrackingID you want.
 
-        var sampleToken = parseJson("sampleSSTWithNoParentTracking.json");
+        var sampleToken = parseJson("../../sample-json/sampleSSTWithNoParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
@@ -126,7 +126,7 @@ public class Main {
      * @return An example JWT with the TrackingID the same as the parent.
      */
     private static String createSSTWithParentTrackingID(){
-        var sampleToken = parseJson("sampleSSTWithParentTracking.json");
+        var sampleToken = parseJson("../../sample-json/sampleSSTWithParentTracking.json");
         if (sampleToken == null) {
             System.exit(1);
             return null;
@@ -173,9 +173,7 @@ public class Main {
      * @return A model representing the master subscribe token.
      */
     private static SampleSubscribeToken parseJson(String sampleName) {
-        var classloader = Thread.currentThread().getContextClassLoader();
-
-        try (var stream = classloader.getResourceAsStream(sampleName);
+        try (var stream = new FileInputStream(sampleName);
              var reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
              var buffer = new BufferedReader(reader)) {
             var gson = new Gson();
