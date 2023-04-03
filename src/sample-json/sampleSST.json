@@ -1,6 +1,13 @@
 {
         "id": 527,
         "token": "tokenStringtokenStringtokenStringtokenStringtokenStringtokenString",
+        "label": "sampleSSTLabel",
+        "addedOn": "2023-03-27T03:52:40Z",
+        "isActive": true,
+        "allowedOrigins": [],
+        "allowedIpAddresses": [],
+        "allowedCountries": [],
+        "deniedCountries": [],
         "streams": [
             {
                 "streamName": ".*",
