@@ -23,7 +23,7 @@ mvn clean compile
 Run from inside directory with pom.xml.
 
 ```bash
-mvn --quiet exec:java -Dexec.mainClass=io.dolby.streaming.Main
+mvn --quiet exec:java -Dexec.mainClass=io.dolby.streaming.selfsignjwt.Main
 ```
 
 ## Additional Notes
