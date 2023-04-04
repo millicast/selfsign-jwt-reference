@@ -1,13 +1,15 @@
-# Requirements
+# Ruby reference
+
+## Prerequisites
 * ruby >= 2.5 - https://www.ruby-lang.org/en/downloads/
 * bundler - https://bundler.io/
 
-# Setup & Build
+## Setup & Build
 ```
 bundle install
 ```
 
-# Running sample
+## Running sample
 ```
-ruby index.rb
+ruby ruby-tokengenerator/index.rb
 ```
