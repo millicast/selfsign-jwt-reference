@@ -25,6 +25,7 @@ sudo npm install -g npm
 ## Setup & Build
 
 ```bash
+npm install jsonwebtoken --save
 npm ci
 ```
 
