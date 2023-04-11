@@ -1,0 +1,21 @@
+{
+    "tracking": {
+            "trackingId": "test-test-test"
+        },
+        "id": 541,
+        "token": "tokentokentokentokentokentokentokentokentokentokentokentokentokentokentoken",
+        "label": "sampleSSTLabel",
+        "addedOn": "2023-03-27T03:52:40Z",
+        "isActive": true,
+        "allowedOrigins": [],
+        "allowedIpAddresses": [],
+        "allowedCountries": [],
+        "deniedCountries": [],
+        "streams": [
+            {
+                "streamName": ".*",
+                "isRegex": true
+            }
+        ],
+        "originCluster": "do-sfo-legacy"
+}

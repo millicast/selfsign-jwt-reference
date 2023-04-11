@@ -7,7 +7,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="sampleSST.json" />
+        <None Update="sample.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
@@ -17,6 +19,6 @@
         <Using Include="System.Text" />
         <Using Include="System.Text.Json" />
         <Using Include="Microsoft.IdentityModel.Tokens" />
-        <Using Include="CSharp.SelfSignJwt" />
+        <Using Include="CSharp.SelfSignJwtTracking" />
     </ItemGroup>
 </Project>

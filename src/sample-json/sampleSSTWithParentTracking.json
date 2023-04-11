@@ -1,0 +1,21 @@
+{
+    "tracking": {
+            "trackingId": "test-parent-tracking"
+        },
+        "id": 8538,
+        "label": "mst-pvt-tracking-2",
+        "token": "testtokentesttokentesttokentesttokentesttokentesttoken",
+        "addedOn": "2023-03-27T03:52:40Z",
+        "isActive": true,
+        "streams": [
+            {
+                "streamName": ".*",
+                "isRegex": true
+            }
+        ],
+        "allowedOrigins": [],
+        "allowedIpAddresses": [],
+        "allowedCountries": [],
+        "deniedCountries": [],
+        "originCluster": "do-sfo-legacy"
+        }
