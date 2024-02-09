@@ -18,15 +18,21 @@ export default class TokenGenerator {
    * @param {string[]=} allowedIpAddresses
    * @param {Tracking} tracking
    * @param {number} [expiresIn = 60]
+   * @param {?string} customViewerData
    * @returns {string}
    */
-  createToken(tokenId, token, streamName, allowedOrigins, allowedIpAddresses , tracking, expiresIn = 60) {
+  createToken(tokenId, token, streamName,
+              allowedOrigins, allowedIpAddresses ,
+              tracking,
+              expiresIn = 60,
+              customViewerData = null) {
     const payload = {
       streaming: {
         tokenId: tokenId,
         tokenType: 'Subscribe',
         streamName: streamName,
         tracking: tracking ?? null,
+        customViewerData: customViewerData ?? null,
         allowedOrigins: allowedOrigins ?? [],
         allowedIpAddresses: allowedIpAddresses ?? []
       }
