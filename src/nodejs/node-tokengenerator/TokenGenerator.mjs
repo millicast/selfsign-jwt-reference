@@ -1,5 +1,11 @@
 import JsonWebToken from 'jsonwebtoken';
 
+export class Limits {
+  static get customViewerData() {
+    return 128;
+  }
+}
+
 export default class TokenGenerator {
   /**
    *
@@ -18,7 +24,7 @@ export default class TokenGenerator {
    * @param {string[]=} allowedIpAddresses
    * @param {Tracking} tracking
    * @param {number} [expiresIn = 60]
-   * @param {?string} customViewerData
+   * @param {?string} customViewerData - Viewer data associated with connections using this token. Max length: 128
    * @returns {string}
    */
   createToken(tokenId, token, streamName,
@@ -37,6 +43,7 @@ export default class TokenGenerator {
         allowedIpAddresses: allowedIpAddresses ?? []
       }
     };
+    this._validateStreamingPayload(payload.streaming);
 
     const signOptions = {
       algorithm: this.hmacAlg,
@@ -44,5 +51,11 @@ export default class TokenGenerator {
     };
 
     return JsonWebToken.sign(payload, token, signOptions);
+  }
+
+  _validateStreamingPayload(streaming) {
+    if (streaming.customViewerData && streaming.customViewerData.length > Limits.customViewerData) {
+      throw new Error(`customViewerData cannot be longer than: ${Limits.customViewerData}`)
+    }
   }
 }
