@@ -1,5 +1,7 @@
 import JsonWebToken from 'jsonwebtoken';
 
+const defaultExpiresIn = 60;
+
 export class Limits {
   static get customViewerData() {
     return 256;
@@ -23,14 +25,14 @@ export default class TokenGenerator {
    * @param {string[]=} allowedOrigins
    * @param {string[]=} allowedIpAddresses
    * @param {Tracking} tracking
-   * @param {number} [expiresIn = 60]
+   * @param {?number} [expiresIn = 60]
    * @param {?string} customViewerData - Viewer data associated with connections using this token. Max length: 128
    * @returns {string}
    */
   createToken(tokenId, token, streamName,
               allowedOrigins, allowedIpAddresses ,
               tracking,
-              expiresIn = 60,
+              expiresIn = defaultExpiresIn,
               customViewerData = null) {
     const payload = {
       streaming: {
@@ -47,7 +49,7 @@ export default class TokenGenerator {
 
     const signOptions = {
       algorithm: this.hmacAlg,
-      expiresIn: expiresIn
+      expiresIn: expiresIn ?? defaultExpiresIn
     };
 
     return JsonWebToken.sign(payload, token, signOptions);
