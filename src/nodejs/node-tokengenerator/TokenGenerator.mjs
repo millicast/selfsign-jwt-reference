@@ -2,7 +2,7 @@ import JsonWebToken from 'jsonwebtoken';
 
 export class Limits {
   static get customViewerData() {
-    return 128;
+    return 256;
   }
 }
 
