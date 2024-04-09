@@ -16,11 +16,13 @@ public class TokenGenerator
         _tokenHandler = new JwtSecurityTokenHandler();
     }
 
-    public string CreateToken(uint tokenId, string tokenString, string streamName, Tracking? tracking,
+    public string CreateToken(uint tokenId, string tokenString, string streamName,
+        Tracking? tracking = null,
         IEnumerable<string>? allowedOrigins = null, IEnumerable<string>? allowedIpAddresses = null,
-        int expiresIn = 60)
+        int expiresIn = 60,
+        string? customViewerData = null)
     {
-        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
+        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking, customViewerData);
 
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -41,9 +43,10 @@ public class TokenGenerator
     {
         public StreamPayload streaming { get; }
 
-        public JwtPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking)
+        public JwtPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
+            string? customViewerData)
         {
-            this.streaming = new StreamPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking);
+            this.streaming = new StreamPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking, customViewerData);
         }
     }
 
@@ -61,13 +64,17 @@ public class TokenGenerator
         
         public Tracking? tracking { get; }
 
-        public StreamPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking)
+        public string customViewerData { get; }
+
+        public StreamPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
+            string? customViewerData)
         {
             this.tokenId = tokenId;
             this.streamName = streamName;
             this.allowedOrigins = allowedOrigins ?? Enumerable.Empty<string>();
             this.allowedIpAddresses = allowedIpAddresses ?? Enumerable.Empty<string>();
             this.tracking = tracking;
+            this.customViewerData = customViewerData;
         }
     }
 }
