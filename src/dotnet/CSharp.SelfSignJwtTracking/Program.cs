@@ -14,7 +14,7 @@ if (sampleTokenWithNoParentTracking is null)
 var selfSignTokenWithNoTracking = tokenGenerator.CreateToken(sampleTokenWithNoParentTracking.tokenId,
     sampleTokenWithNoParentTracking.token,
     sampleTokenWithNoParentTracking.streams.First().streamName,
-    sampleTokenWithNoParentTracking.tracking, expiresIn: 99999999);
+    sampleTokenWithNoParentTracking.tracking);
 
 Console.WriteLine("SST With No Tracking enabled: "+ selfSignTokenWithNoTracking);
 
@@ -68,7 +68,7 @@ else
 var selfSignTokenWithParentTracking = tokenGenerator.CreateToken(sampleTokenWithParentTracking.tokenId,
     sampleTokenWithParentTracking.token,
     streamName,
-    sampleTokenWithParentTracking.tracking, expiresIn:99999999);
+    sampleTokenWithParentTracking.tracking);
 
 Console.WriteLine("SST With Parent Tracking: "+ selfSignTokenWithParentTracking);
 
@@ -117,7 +117,7 @@ else
 var customTrackingId = new Tracking("customTrackingId2");
 var selfSignTokenWithCustomTracking = tokenGenerator.CreateToken(sampleTokenWithCustomTrackingId.tokenId,
     sampleTokenWithCustomTrackingId.token,
-    streamName, customTrackingId,  expiresIn: 99999999);
+    streamName, customTrackingId);
 
 Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracking);
 
@@ -140,3 +140,35 @@ Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracki
 }
  */
 
+
+
+var sampleTokenWithCustomViewerData = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("../../../../../sample-json/sampleSST.json"));
+if (sampleTokenWithCustomViewerData is null)
+{
+    throw new Exception("bad sample json");
+}
+
+var selfSignTokenWithCustomViewerData = tokenGenerator.CreateToken(sampleTokenWithCustomViewerData.tokenId,
+    sampleTokenWithCustomViewerData.token,
+    sampleTokenWithCustomViewerData.streams.First().streamName,
+    customViewerData: "uniqueViewer1234");
+
+Console.WriteLine("SST With customViewerData: "+ selfSignTokenWithCustomViewerData);
+
+// Example JWT payload, when we don't set a TrackingID (and the Master Subscribe Token doesn't have Tracking)
+/*
+ * {
+  "streaming": {
+    "tokenId": 1,
+    "tokenType": "Subscribe",
+    "streamName": "testStream",
+    "allowedOrigins": [],
+    "allowedIpAddresses": [],
+    "tracking": null,
+    "customViewerData": "uniqueViewer1234"
+  },
+  "nbf": 1673934423,
+  "exp": 1673934483,
+  "iat": 1673934423
+}
+ */

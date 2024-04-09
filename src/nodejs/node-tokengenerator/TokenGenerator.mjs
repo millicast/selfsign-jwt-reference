@@ -26,7 +26,7 @@ export default class TokenGenerator {
    * @param {string[]=} allowedIpAddresses
    * @param {Tracking} tracking
    * @param {?number} [expiresIn = 60]
-   * @param {?string} customViewerData - Viewer data associated with connections using this token. Max length: 128
+   * @param {?string} customViewerData - Viewer data associated with connections using this token. Max length: 256
    * @returns {string}
    */
   createToken(tokenId, token, streamName,
