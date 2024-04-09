@@ -23,6 +23,7 @@ public class TokenGenerator
         string? customViewerData = null)
     {
         var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking, customViewerData);
+        ValidateStreamingPayload(payload.streaming);
 
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -37,6 +38,14 @@ public class TokenGenerator
         var securityToken = _tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
 
         return _tokenHandler.WriteToken(securityToken);
+    }
+
+    void ValidateStreamingPayload(StreamPayload streaming)
+    {
+        if (streaming.customViewerData is { Length: > Limits.CustomViewerData })
+        {
+            throw new Exception($"customViewerData cannot be longer than: {Limits.CustomViewerData}");
+        }
     }
 
     class JwtPayload
@@ -77,4 +86,9 @@ public class TokenGenerator
             this.customViewerData = customViewerData;
         }
     }
+}
+
+public static class Limits
+{
+    public const int CustomViewerData = 256;
 }
