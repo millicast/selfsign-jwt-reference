@@ -140,3 +140,35 @@ Console.WriteLine("SST with Custom TrackingID: " + selfSignTokenWithCustomTracki
 }
  */
 
+
+
+var sampleTokenWithCustomViewerData = JsonSerializer.Deserialize<SampleSubscribeToken>(File.OpenRead("../../../../../sample-json/sampleSST.json"));
+if (sampleTokenWithCustomViewerData is null)
+{
+    throw new Exception("bad sample json");
+}
+
+var selfSignTokenWithCustomViewerData = tokenGenerator.CreateToken(sampleTokenWithCustomViewerData.tokenId,
+    sampleTokenWithCustomViewerData.token,
+    sampleTokenWithCustomViewerData.streams.First().streamName,
+    customViewerData: "uniqueViewer1234");
+
+Console.WriteLine("SST With customViewerData: "+ selfSignTokenWithCustomViewerData);
+
+// Example JWT payload, when we don't set a TrackingID (and the Master Subscribe Token doesn't have Tracking)
+/*
+ * {
+  "streaming": {
+    "tokenId": 1,
+    "tokenType": "Subscribe",
+    "streamName": "testStream",
+    "allowedOrigins": [],
+    "allowedIpAddresses": [],
+    "tracking": null,
+    "customViewerData": "uniqueViewer1234"
+  },
+  "nbf": 1673934423,
+  "exp": 1673934483,
+  "iat": 1673934423
+}
+ */
