@@ -90,5 +90,5 @@ public class TokenGenerator
 
 public static class Limits
 {
-    public const int CustomViewerData = 256;
+    public const int CustomViewerData = 1024;
 }
