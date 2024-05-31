@@ -4,7 +4,7 @@ const defaultExpiresIn = 60;
 
 export class Limits {
   static get customViewerData() {
-    return 256;
+    return 1024;
   }
 }
 
@@ -26,7 +26,7 @@ export default class TokenGenerator {
    * @param {string[]=} allowedIpAddresses
    * @param {Tracking} tracking
    * @param {?number} [expiresIn = 60]
-   * @param {?string} customViewerData - Viewer data associated with connections using this token. Max length: 256
+   * @param {?string} customViewerData - Viewer data associated with connections using this token. Max length: 1024
    * @returns {string}
    */
   createToken(tokenId, token, streamName,
