@@ -62,4 +62,12 @@ For other tracking examples, read [here](./tracking.md)
   "iat": 1673600857
 }
 ```
-```
+
+## Payload Restrictions
+
+The following restrictions apply to the payload.
+
+* The `streamName` is limited to 128 characters.
+* The total number of `allowedOrigins` on the SST and the parent subscribe token is limited to 10. The total character count of all `allowedOrigins` may not exceed 200.
+* The total number of `allowedIpAddresses` on the SST and the parent subscribe token is limited to 25.
+* The `trackingId` is limited to 64 characters.
