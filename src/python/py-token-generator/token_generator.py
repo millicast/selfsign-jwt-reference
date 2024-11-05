@@ -22,10 +22,10 @@ class TokenGenerator:
         :Parameters:
         - `token_id`: ID to be specified in the token.
         - `token_string`: Key to use in order to sign the token.
-        - `stream_name`: Stream name to be specified in the token.
-        - `allowed_origins`: Origins to be allowed for this token.
-        - `allowed_ip_addresses`: Origins to be allowed for this token.
-        - `tracking` : Tracking information
+        - `stream_name`: Stream name to be specified in the token. Limited to 128 characters.
+        - `allowed_origins`: Origins to be allowed for this token. Maximum of 10.
+        - `allowed_ip_addresses`: IP Addresses to be allowed for this token. Maximum of 25.
+        - `tracking` : Tracking information. TrackingId is limited to 64 characters.
         - `expires_in`: Number of seconds before token expires.
 
         :Returns:

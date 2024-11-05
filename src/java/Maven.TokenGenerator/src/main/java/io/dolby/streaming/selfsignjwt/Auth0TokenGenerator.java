@@ -20,11 +20,11 @@ public class Auth0TokenGenerator extends BaseTokenGenerator {
      * Creates a Self Signed JWT using data found in the Master Subscribe Token
      * @param tokenId The tokenID of the master subscribe token
      * @param tokenString The actual token string from the master subscribe token. This will be used to sign the Self Signed JWT.
-     * @param streamName The stream name the SST is eligible for. This should be the stream name from the Master Subscribe Token
-     * @param allowedOrigins Optional. The Allowed Origins for the Self Signed JWT.
-     * @param allowedIpAddresses Optional. The allowed IP Addresses allowed for viewing with the Self Signed Token.
+     * @param streamName The stream name the SST is eligible for. This should be the stream name from the Master Subscribe Token. StreamNames are limited to 128 characters.
+     * @param allowedOrigins Optional. The Allowed Origins for the Self Signed JWT. Maximum of 10.
+     * @param allowedIpAddresses Optional. The allowed IP Addresses allowed for viewing with the Self Signed Token. Maximum of 25.
      * @param expiresIn The expiry time for the Self Signed JWT.
-     * @param tracking Optional when Master Subscribe Token does not have tracking. This helps track the SST and it's usage.
+     * @param tracking Optional when Master Subscribe Token does not have tracking. This helps track the SST and it's usage. TrackingId is limited to 64 characters.
      * @return The Self Signed Token JWT.
      */
     public String createToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking) {
