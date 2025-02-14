@@ -25,7 +25,7 @@ class TokenGenerator:
         - `stream_name`: Stream name to be specified in the token. Limited to 128 characters.
         - `allowed_origins`: Origins to be allowed for this token. Maximum of 10.
         - `allowed_ip_addresses`: IP Addresses to be allowed for this token. Maximum of 25.
-        - `tracking` : Tracking information. TrackingId is limited to 64 characters.
+        - `tracking` : Tracking information. TrackingId is limited to 128 characters.
         - `expires_in`: Number of seconds before token expires.
 
         :Returns:

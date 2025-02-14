@@ -24,7 +24,7 @@ public class Auth0TokenGenerator extends BaseTokenGenerator {
      * @param allowedOrigins Optional. The Allowed Origins for the Self Signed JWT. Maximum of 10.
      * @param allowedIpAddresses Optional. The allowed IP Addresses allowed for viewing with the Self Signed Token. Maximum of 25.
      * @param expiresIn The expiry time for the Self Signed JWT.
-     * @param tracking Optional when Master Subscribe Token does not have tracking. This helps track the SST and it's usage. TrackingId is limited to 64 characters.
+     * @param tracking Optional when Master Subscribe Token does not have tracking. This helps track the SST and it's usage. TrackingId is limited to 128 characters.
      * @return The Self Signed Token JWT.
      */
     public String createToken(long tokenId, String tokenString, String streamName, List<String> allowedOrigins, List<String> allowedIpAddresses, int expiresIn, Tracking tracking) {
