@@ -1,7 +1,20 @@
+using System.Text.Json.Serialization;
+
 namespace CSharp.SelfSignJwt;
 
 public class TokenGenerator
 {
+    private static readonly JsonSerializerOptions s_serializerOptions;
+
+    static TokenGenerator()
+    {
+        s_serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.General)
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+    }
+
     private readonly JwtSecurityTokenHandler _tokenHandler;
     private readonly string _hmacAlg;
 
@@ -30,7 +43,7 @@ public class TokenGenerator
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenString)), _hmacAlg),
             Claims = new Dictionary<string, object>()
             {
-                {nameof(JwtPayload.streaming), JsonSerializer.SerializeToElement(payload.streaming)}
+                {nameof(JwtPayload.streaming), JsonSerializer.SerializeToElement(payload.streaming, s_serializerOptions)}
             },
             Expires = DateTime.UtcNow.AddSeconds(expiresIn),
             NotBefore = null
