@@ -7,6 +7,7 @@ public class SampleSubscribeToken
     [JsonPropertyName("id")]
     public uint tokenId { get; init; }
     public string token { get; init; }
+    public string originCluster { get; init; }
     public List<TokenStream> streams { get; init; }
     public Tracking? tracking { get; init; }
 
@@ -14,6 +15,7 @@ public class SampleSubscribeToken
     {
         this.streams = new List<TokenStream>();
         this.token = string.Empty;
+        this.originCluster = string.Empty;
     }
 }
 
