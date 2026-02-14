@@ -30,7 +30,7 @@ public class TokenGenerator
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenString)), _hmacAlg),
             Claims = new Dictionary<string, object>()
             {
-                {nameof(JwtPayload.streaming), payload.streaming}
+                {nameof(JwtPayload.streaming), JsonSerializer.SerializeToElement(payload.streaming)}
             },
             Expires = DateTime.UtcNow.AddSeconds(expiresIn),
             NotBefore = null
