@@ -5,10 +5,10 @@ namespace CSharp.SelfSignJwt;
 public class SampleSubscribeToken
 {
     [JsonPropertyName("id")]
-    public uint tokenId { get; }
-    public string token { get; }
-    public List<TokenStream> streams { get; }
-    public Tracking? tracking { get; }
+    public uint tokenId { get; init; }
+    public string token { get; init; }
+    public List<TokenStream> streams { get; init; }
+    public Tracking? tracking { get; init; }
 
     public SampleSubscribeToken()
     {
@@ -19,8 +19,8 @@ public class SampleSubscribeToken
 
 public class TokenStream
 {
-    public string streamName { get; }
-    public bool isRegex { get; }
+    public string streamName { get; init; }
+    public bool isRegex { get; init; }
 
     public TokenStream()
     {
@@ -30,7 +30,7 @@ public class TokenStream
 
 public class Tracking
 {
-    public string trackingId { get; }
+    public string trackingId { get; init; }
 
     public Tracking()
     {
