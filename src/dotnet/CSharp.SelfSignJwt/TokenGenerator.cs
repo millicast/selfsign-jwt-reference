@@ -1,7 +1,20 @@
+using System.Text.Json.Serialization;
+
 namespace CSharp.SelfSignJwt;
 
 public class TokenGenerator
 {
+    private static readonly JsonSerializerOptions s_serializerOptions;
+
+    static TokenGenerator()
+    {
+        s_serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.General)
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        };
+    }
+
     private readonly JwtSecurityTokenHandler _tokenHandler;
     private readonly string _hmacAlg;
 
@@ -17,33 +30,46 @@ public class TokenGenerator
     }
 
     public string CreateToken(uint tokenId, string tokenString, string streamName,
+        Tracking? tracking = null,
         IEnumerable<string>? allowedOrigins = null, IEnumerable<string>? allowedIpAddresses = null,
-        int expiresIn = 60)
+        int expiresIn = 60,
+        string? customViewerData = null)
     {
-        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses);
+        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking, customViewerData);
+        ValidateStreamingPayload(payload.streaming);
 
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenString)), _hmacAlg),
             Claims = new Dictionary<string, object>()
             {
-                {nameof(JwtPayload.streaming), payload.streaming}
+                {nameof(JwtPayload.streaming), JsonSerializer.SerializeToElement(payload.streaming, s_serializerOptions)}
             },
-            Expires = DateTime.UtcNow.AddSeconds(expiresIn),
-            NotBefore = null
+            Expires = DateTime.UtcNow.AddSeconds(expiresIn)
         };
         var securityToken = _tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
 
         return _tokenHandler.WriteToken(securityToken);
     }
 
+    void ValidateStreamingPayload(StreamPayload streaming)
+    {
+        if (streaming.customViewerData is { Length: > Limits.CustomViewerData })
+        {
+            throw new Exception($"customViewerData cannot be longer than: {Limits.CustomViewerData}");
+        }
+    }
+
     class JwtPayload
     {
         public StreamPayload streaming { get; }
 
-        public JwtPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses)
+        public JwtPayload(uint tokenId, string streamName,
+            IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
+            string? customViewerData)
         {
-            this.streaming = new StreamPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses);
+            this.streaming = new StreamPayload(tokenId, streamName,
+                allowedOrigins, allowedIpAddresses, tracking, customViewerData);
         }
     }
 
@@ -59,12 +85,25 @@ public class TokenGenerator
 
         public IEnumerable<string> allowedIpAddresses { get; }
 
-        public StreamPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses)
+        public Tracking? tracking { get; }
+
+        public string? customViewerData { get; }
+
+        public StreamPayload(uint tokenId, string streamName,
+            IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
+            string? customViewerData)
         {
             this.tokenId = tokenId;
             this.streamName = streamName;
             this.allowedOrigins = allowedOrigins ?? Enumerable.Empty<string>();
             this.allowedIpAddresses = allowedIpAddresses ?? Enumerable.Empty<string>();
+            this.tracking = tracking;
+            this.customViewerData = customViewerData;
         }
     }
+}
+
+public static class Limits
+{
+    public const int CustomViewerData = 1024;
 }
