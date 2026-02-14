@@ -7,7 +7,7 @@ if (sampleToken is null)
     throw new Exception("bad sample json");
 }
 
-var streamName = sampleToken.streams.First().streamName;
+var streamName = ChooseStreamName(sampleToken);
 var sstWithNoTrackingInformation = tokenGenerator.CreateToken(sampleToken.tokenId,
     sampleToken.token,
     streamName);
@@ -36,7 +36,7 @@ if (sampleTokenWithCustomTrackingId is null)
     throw new Exception("bad sample json");
 }
 
-streamName = ChooseStreamName(sampleTokenWithParentTracking);
+streamName = ChooseStreamName(sampleTokenWithCustomTrackingId);
 var customTrackingId = new Tracking("customTrackingId2");
 var selfSignTokenWithCustomTracking = tokenGenerator.CreateToken(sampleTokenWithCustomTrackingId.tokenId,
     sampleTokenWithCustomTrackingId.token,
@@ -52,7 +52,7 @@ if (sampleTokenWithCustomViewerData is null)
     throw new Exception("bad sample json");
 }
 
-streamName = sampleTokenWithCustomViewerData.streams.First().streamName;
+streamName = ChooseStreamName(sampleTokenWithCustomViewerData);
 var selfSignTokenWithCustomViewerData = tokenGenerator.CreateToken(sampleTokenWithCustomViewerData.tokenId,
     sampleTokenWithCustomViewerData.token,
     streamName,
