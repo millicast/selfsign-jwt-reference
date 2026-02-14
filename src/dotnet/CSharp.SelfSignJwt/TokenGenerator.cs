@@ -45,8 +45,7 @@ public class TokenGenerator
             {
                 {nameof(JwtPayload.streaming), JsonSerializer.SerializeToElement(payload.streaming, s_serializerOptions)}
             },
-            Expires = DateTime.UtcNow.AddSeconds(expiresIn),
-            NotBefore = null
+            Expires = DateTime.UtcNow.AddSeconds(expiresIn)
         };
         var securityToken = _tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
 
