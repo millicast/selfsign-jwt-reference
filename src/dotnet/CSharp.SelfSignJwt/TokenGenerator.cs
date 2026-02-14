@@ -17,10 +17,13 @@ public class TokenGenerator
     }
 
     public string CreateToken(uint tokenId, string tokenString, string streamName,
+        Tracking? tracking = null,
         IEnumerable<string>? allowedOrigins = null, IEnumerable<string>? allowedIpAddresses = null,
-        int expiresIn = 60)
+        int expiresIn = 60,
+        string? customViewerData = null)
     {
-        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses);
+        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking, customViewerData);
+        ValidateStreamingPayload(payload.streaming);
 
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
@@ -37,13 +40,24 @@ public class TokenGenerator
         return _tokenHandler.WriteToken(securityToken);
     }
 
+    void ValidateStreamingPayload(StreamPayload streaming)
+    {
+        if (streaming.customViewerData is { Length: > Limits.CustomViewerData })
+        {
+            throw new Exception($"customViewerData cannot be longer than: {Limits.CustomViewerData}");
+        }
+    }
+
     class JwtPayload
     {
         public StreamPayload streaming { get; }
 
-        public JwtPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses)
+        public JwtPayload(uint tokenId, string streamName,
+            IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
+            string? customViewerData)
         {
-            this.streaming = new StreamPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses);
+            this.streaming = new StreamPayload(tokenId, streamName,
+                allowedOrigins, allowedIpAddresses, tracking, customViewerData);
         }
     }
 
@@ -59,12 +73,25 @@ public class TokenGenerator
 
         public IEnumerable<string> allowedIpAddresses { get; }
 
-        public StreamPayload(uint tokenId, string streamName, IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses)
+        public Tracking? tracking { get; }
+
+        public string? customViewerData { get; }
+
+        public StreamPayload(uint tokenId, string streamName,
+            IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
+            string? customViewerData)
         {
             this.tokenId = tokenId;
             this.streamName = streamName;
             this.allowedOrigins = allowedOrigins ?? Enumerable.Empty<string>();
             this.allowedIpAddresses = allowedIpAddresses ?? Enumerable.Empty<string>();
+            this.tracking = tracking;
+            this.customViewerData = customViewerData;
         }
     }
+}
+
+public static class Limits
+{
+    public const int CustomViewerData = 1024;
 }

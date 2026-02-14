@@ -7,10 +7,7 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <None Remove="sampleSST.json" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
     </ItemGroup>
     <ItemGroup>
         <Using Include="System.IdentityModel.Tokens.Jwt" />
