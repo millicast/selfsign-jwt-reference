@@ -17,10 +17,14 @@ const sstWithCustomTracking = createSSTWithCustomTrackingInformation();
 // use basic SST with customViewerData
 const sstWithCustomViewerData = createSSTWithCustomViewerData();
 
-console.log('SST with no TrackingID: '+ sstNoTrackingToken +
-    '\nSST with parent TrackingID: '+ sstWithParentTrackingToken +
-    '\nSST with custom TrackingID: '+ sstWithCustomTracking +
-    '\nSST with customViewerData: ' + sstWithCustomViewerData);
+// use basic SST with originCluster
+const sstWithOriginCluster = createSSTWithOriginCluster();
+
+console.log('SST with no TrackingID: '   + sstNoTrackingToken +
+    '\n\n\nSST with parent TrackingID: ' + sstWithParentTrackingToken +
+    '\n\n\nSST with custom TrackingID: ' + sstWithCustomTracking +
+    '\n\n\nSST with customViewerData: '  + sstWithCustomViewerData +
+    '\n\n\nSST with originCluster: '     + sstWithOriginCluster);
 
 
 function createSSTWithNoTrackingInformation(){
@@ -34,22 +38,35 @@ function createSSTWithParentTrackingInformation(){
   const sampleToken = getSampleToken();
   const streamName = getStreamName(sampleToken, regexStreamName);
 
-  return generator.createToken(sampleToken.id, sampleToken.token, streamName, null, null, sampleToken.tracking);
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName,
+      null, null, sampleToken.tracking);
 }
 
 function createSSTWithCustomTrackingInformation(){
   const sampleToken = getSampleToken();
   const streamName = getStreamName(sampleToken, regexStreamName);
 
-  return generator.createToken(sampleToken.id, sampleToken.token, streamName, null, null, new Tracking("customTrackingId"));
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName,
+      null, null,
+      new Tracking("customTrackingId"));
 }
 
 function createSSTWithCustomViewerData() {
   const sampleToken = getSampleToken();
   const streamName = getStreamName(sampleToken, regexStreamName);
 
-  return generator.createToken(sampleToken.id, sampleToken.token, streamName, null, null, null, null,
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName,
+      null, null, null, null,
       'uniqueViewer1234');
+}
+
+function createSSTWithOriginCluster() {
+  const sampleToken = getSampleToken();
+  const streamName = getStreamName(sampleToken, regexStreamName);
+
+  return generator.createToken(sampleToken.id, sampleToken.token, streamName,
+      null, null, null, null, null,
+      'phx-1');
 }
 
 function getSampleToken(sampleTokenPath = '../../sample-json/sampleSST.json') {
