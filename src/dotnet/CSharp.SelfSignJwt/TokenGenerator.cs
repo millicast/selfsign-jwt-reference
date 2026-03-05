@@ -33,9 +33,11 @@ public class TokenGenerator
         Tracking? tracking = null,
         IEnumerable<string>? allowedOrigins = null, IEnumerable<string>? allowedIpAddresses = null,
         int expiresIn = 60,
-        string? customViewerData = null)
+        string? customViewerData = null,
+        string? originCluster = null)
     {
-        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking, customViewerData);
+        var payload = new JwtPayload(tokenId, streamName, allowedOrigins, allowedIpAddresses, tracking,
+            customViewerData, originCluster);
         ValidateStreamingPayload(payload.streaming);
 
         var tokenDescriptor = new SecurityTokenDescriptor()
@@ -66,10 +68,12 @@ public class TokenGenerator
 
         public JwtPayload(uint tokenId, string streamName,
             IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
-            string? customViewerData)
+            string? customViewerData,
+            string? originCluster)
         {
             this.streaming = new StreamPayload(tokenId, streamName,
-                allowedOrigins, allowedIpAddresses, tracking, customViewerData);
+                allowedOrigins, allowedIpAddresses, tracking,
+                customViewerData, originCluster);
         }
     }
 
@@ -89,9 +93,12 @@ public class TokenGenerator
 
         public string? customViewerData { get; }
 
+        public string? originCluster { get; }
+
         public StreamPayload(uint tokenId, string streamName,
             IEnumerable<string>? allowedOrigins, IEnumerable<string>? allowedIpAddresses, Tracking? tracking,
-            string? customViewerData)
+            string? customViewerData,
+            string? originCluster)
         {
             this.tokenId = tokenId;
             this.streamName = streamName;
@@ -99,6 +106,7 @@ public class TokenGenerator
             this.allowedIpAddresses = allowedIpAddresses ?? Enumerable.Empty<string>();
             this.tracking = tracking;
             this.customViewerData = customViewerData;
+            this.originCluster = originCluster;
         }
     }
 }

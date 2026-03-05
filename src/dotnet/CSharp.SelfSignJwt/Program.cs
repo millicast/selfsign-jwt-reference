@@ -26,7 +26,7 @@ var selfSignTokenWithParentTracking = tokenGenerator.CreateToken(sampleTokenWith
     sampleTokenWithParentTracking.token,
     streamName,
     sampleTokenWithParentTracking.tracking);
-Console.WriteLine($"SST With Parent Tracking: {selfSignTokenWithParentTracking}\n\n");
+Console.WriteLine($"SST with Parent Tracking: {selfSignTokenWithParentTracking}\n\n");
 
 
 
@@ -58,7 +58,18 @@ var selfSignTokenWithCustomViewerData = tokenGenerator.CreateToken(sampleTokenWi
     streamName,
     customViewerData: "uniqueViewer1234");
 
-Console.WriteLine($"SST With customViewerData: {selfSignTokenWithCustomViewerData}\n\n");
+Console.WriteLine($"SST with customViewerData: {selfSignTokenWithCustomViewerData}\n\n");
+
+
+
+streamName = ChooseStreamName(sampleTokenWithCustomViewerData);
+var selfSignTokenWithOriginCluster = tokenGenerator.CreateToken(sampleTokenWithCustomViewerData.tokenId,
+    sampleTokenWithCustomViewerData.token,
+    streamName,
+    originCluster: "phx-1");
+
+Console.WriteLine($"SST with OriginCluster: {selfSignTokenWithOriginCluster}\n\n");
+
 
 
 /***

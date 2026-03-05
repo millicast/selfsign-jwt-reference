@@ -11,12 +11,15 @@ If you can do not care about `tracking`, and your Master Subscribe Token does no
 There are some scenarios where the payload will need a `tracking` section (such as if it's already set on the Master Subscribe Token).
 Read more [here](./tracking.md)
 
+The `originCluster` can be set in SST if the MST token uses `auto` (or can be the same value as MST).
+
 ```psuedojson
 {
   "streaming": {
     "tokenId": number,
     "tokenType": "Subscribe",
     "streamName": string,
+    "originCluster": string,
     "allowedOrigins": string[],
     "allowedIpAddresses": string[],
     "tracking": null
@@ -45,7 +48,8 @@ We support the following: HS256, HS384, HS512.
 The JWT signing library may or may not add a `nbf` (NotBefore) field.
 This is supported, but not strictly required in our JWTs.
 
-This example below shows an example `SST` with **no tracking**, generated from a Master Subscribe Token that does not have `tracking` enabled.
+This example below shows an example `SST` with **no tracking**, generated from a Master Subscribe Token that does not have `tracking` enabled. It also overrides the `originCluster` to the `phx-1` cluster. 
+
 For other tracking examples, read [here](./tracking.md)
 
 ```json
@@ -54,6 +58,7 @@ For other tracking examples, read [here](./tracking.md)
     "tokenId": 1,
     "tokenType": "Subscribe",
     "streamName": "teststream",
+    "originCluster": "phx-1",
     "allowedOrigins": [],
     "allowedIpAddresses": [],
     "tracking": null
@@ -61,5 +66,4 @@ For other tracking examples, read [here](./tracking.md)
   "exp": 1673600917,
   "iat": 1673600857
 }
-```
 ```
